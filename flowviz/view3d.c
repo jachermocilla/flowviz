@@ -131,23 +131,23 @@ void LoadGrid(Grid grid, int nSize, unsigned char *pHeightMap){
 	}
 }
 
-int Height(unsigned char *pHeightMap, int X, int Y)		/* This Returns The Height From A Height Map Index */
+int Height(Grid grid, int X, int Y)		/* This Returns The Height From A Height Map Index */
 {
-	int x = X % MAP_SIZE;								/* Error Check Our x Value */
-	int y = Y % MAP_SIZE;								/* Error Check Our y Value */
+	int x = X % (int)(grid->width);								/* Error Check Our x Value */
+	int y = Y % (int)(grid->length);								/* Error Check Our y Value */
 
-	if(!pHeightMap) return 0;							/* Make Sure Our Data Is Valid */
+	if(!grid) return 0;							/* Make Sure Our Data Is Valid */
 
-	return pHeightMap[x + (y * MAP_SIZE)];				/* Index Into Our Height Array And Return The Height */
+	return (int)(grid->cells[y][x]->elevation);				/* Index Into Our Height Array And Return The Height */
 }
 
-void SetVertexColor(unsigned char *pHeightMap, int x, int y)	/* Sets The Color Value For A Particular Index, Depending On The Height Index */
+void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Particular Index, Depending On The Height Index */
 {
-	if(!pHeightMap)
+	if(!grid)
 		return;								/* Make Sure Our Height Data Is Valid */
 	else
 	{
-		float fColor = (-0.15f + ((Height(pHeightMap, x, y )+127) / 256.0f));
+		float fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
 		/* Assign This Blue Shade To The Current Vertex */
 		glColor3f(0, 0, fColor );
 	}
@@ -192,60 +192,60 @@ void RenderFlowMap(int n, Grid grid, int maxsteps){
 }
 
 
-void RenderHeightMap(unsigned char pHeightMap[])		/* This Renders The Height Map As Quads */
+void RenderHeightMap(Grid grid)		/* This Renders The Height Map As Quads */
 {
 	int X = 0, Y = 0;									/* Create Some Variables To Walk The Array With. */
 	int x, y, z;										/* Create Some Variables For Readability */
   Point p;
 
 
-	if(!pHeightMap) return;							/* Make Sure Our Height Data Is Valid */
+	if(!grid) return;							/* Make Sure Our Height Data Is Valid */
 
 	if(bRender)											/* What We Want To Render */
 		glBegin( GL_QUADS );							/* Render Polygons */
 	else
 		glBegin( GL_LINES );							/* Render Lines Instead */
 
-	for ( X = 0; X < MAP_SIZE; X += STEP_SIZE )
-		for ( Y = 0; Y < MAP_SIZE; Y += STEP_SIZE )
+	for ( X = 0; X < grid->width; X += STEP_SIZE )
+		for ( Y = 0; Y < grid->length; Y += STEP_SIZE )
 		{
 			/* Get The (X, Y, Z) Value For The Bottom Left Vertex */
 			x = X;							
-			y = Height(pHeightMap, X, Y );
+			y = Height(grid, X, Y );
 			z = Y;
 
 			/* Set The Color Value Of The Current Vertex */
-			SetVertexColor(pHeightMap, x, z);
+			SetVertexColor(grid, x, z);
 
 			glVertex3i(x, y, z);						/* Send This Vertex To OpenGL To Be Rendered (Integer Points Are Faster) */
 
 			/* Get The (X, Y, Z) Value For The Top Left Vertex */
 			x = X;										
-			y = Height(pHeightMap, X, Y + STEP_SIZE );
+			y = Height(grid, X, Y + STEP_SIZE );
 			z = Y + STEP_SIZE ;
 
 			/* Set The Color Value Of The Current Vertex */
-			SetVertexColor(pHeightMap, x, z);
+			SetVertexColor(grid, x, z);
 
 			glVertex3i(x, y, z);						/* Send This Vertex To OpenGL To Be Rendered */
 
 			/* Get The (X, Y, Z) Value For The Top Right Vertex */
 			x = X + STEP_SIZE;
-			y = Height(pHeightMap, X + STEP_SIZE, Y + STEP_SIZE );
+			y = Height(grid, X + STEP_SIZE, Y + STEP_SIZE );
 			z = Y + STEP_SIZE ;
 
 			/* Set The Color Value Of The Current Vertex */
-			SetVertexColor(pHeightMap, x, z);
+			SetVertexColor(grid, x, z);
 			
 			glVertex3i(x, y, z);						/* Send This Vertex To OpenGL To Be Rendered */
 
 			/* Get The (X, Y, Z) Value For The Bottom Right Vertex */
 			x = X + STEP_SIZE;
-			y = Height(pHeightMap, X + STEP_SIZE, Y ); 
+			y = Height(grid, X + STEP_SIZE, Y ); 
 			z = Y;
 
 			/* Set The Color Value Of The Current Vertex */
-			SetVertexColor(pHeightMap, x, z);
+			SetVertexColor(grid, x, z);
 
 			glVertex3i(x, y, z);						/* Send This Vertex To OpenGL To Be Rendered */
 		}
@@ -286,9 +286,9 @@ int drawGLScene(GLvoid)									/* Here's Where We Do All The Drawing */
 
     glEnd( );
 	glScalef(scaleValue, scaleValue * HEIGHT_RATIO, scaleValue);
-	glTranslatef(-MAP_SIZE/2.0,0,-MAP_SIZE/2.0);
+	glTranslatef(-(grid->width)/2.0,0,-(grid->width)/2.0);
 
-	RenderHeightMap(g_HeightMap);						/* Render The Height Map */
+	RenderHeightMap(grid);						/* Render The Height Map */
 	RenderFlowMap(1000,grid,200);						/* Render The Height Map */
 	return True;										/* Keep Going */
 }
