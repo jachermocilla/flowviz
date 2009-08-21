@@ -29,3 +29,50 @@ Grid load_raw(char *fname){
 	return grd;
 }
 
+Grid load_asc(char *fname){
+	FILE *fp = fopen(fname,"r");
+	Grid grd;
+	Cell cel;
+	int width,length,tmp,i,j,retval;
+  char buff[256];
+  float tmp2;
+
+
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%d",&width);
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%d",&length);
+
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%f",&tmp2);
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%f",&tmp2);
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%f",&tmp2);
+  fscanf(fp,"%s",buff);
+  fscanf(fp,"%d",&tmp);
+
+
+	printf("%d %d\n",width,length);
+	grd = (Grid)malloc(sizeof(struct _grid));
+	grd->width=width;
+	grd->length=length;
+
+	for (i=0;i< length; i++){
+		for (j=0; j < width;j++){
+			cel=(Cell)malloc(sizeof(struct _cell));
+			cel->x = j;
+			cel->y = i;
+			retval=fscanf(fp,"%d",&tmp);
+      if (tmp==-9999)
+        tmp=0;
+			cel->elevation=(double)tmp;
+			cel->capacity=1;	/*assumed unit capacity */
+			grd->cells[i][j] = cel;
+		}
+	}
+	fclose(fp);
+	return grd;
+}
+
+
