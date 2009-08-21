@@ -43,10 +43,13 @@ int simulation_time=0;
 /*struct _point drop_points[]={{241,234,0},{243,232,0},{230,236,0}};*/
 struct _point drop_points[1000];
 
-void dp(int x,int y, int w,int h){
+void dp(int x,int y, int w,int h)
+{
   int i,j,k=0;
-  for (i=y;i<(y+h);i++){
-    for (j=x;j<(x+w);j++){
+  for (i=y;i<(y+h);i++)
+  {
+    for (j=x;j<(x+w);j++)
+    {
       drop_points[k].x=j;
       drop_points[k].y=i;
       k++;
