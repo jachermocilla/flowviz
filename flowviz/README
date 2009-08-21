@@ -2,3 +2,8 @@ FlowViz
 
 This tool is for simulating and visualizing flow from
 Digital Elevation Models
+
+To build
+--------
+$make
+$flowviz data/makiling.txt
