@@ -20,11 +20,15 @@ Grid generate_random_grid(int width, int length){
 	for (i=0;i< length; i++){
 		for (j=0; j < width;j++){
 			cel=(Cell)malloc(sizeof(struct _cell));
+      /*
 			cel->x = j;
 			cel->y = i;
+      */
 			cel->elevation = rand()%MAX_ELEVATION;
-			cel->capacity = rand()%MAX_CAPACITY;
+			/*
+      cel->capacity = rand()%MAX_CAPACITY;
 			cel->catchment = (int)(rand()%2);
+      */
 			grd->cells[i][j] = cel;
 		}
 	}

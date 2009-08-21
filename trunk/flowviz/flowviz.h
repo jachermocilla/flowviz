@@ -35,10 +35,10 @@
 
 /* A cell */
 typedef struct _cell {
-	int x, y;	
+/*	int x, y;	 */
 	double elevation;
-	double capacity;
-	int catchment;
+/*	double capacity; */
+/*	int catchment; */
 }*Cell;
 
 /* A node in a flow map linked list */
@@ -75,7 +75,7 @@ void d8(Grid g);
 
 
 /*view3d.c*/
-int view3d( int argc, char **argv );
+int view3dGrid(Grid grid);
 
 
 #endif
