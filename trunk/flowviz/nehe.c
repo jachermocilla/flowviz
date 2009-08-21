@@ -294,6 +294,7 @@ static void initKeys(void)
 	keyBindings[WK_S] = 	XKeysymToKeycode(GLWin.dpy, XK_S);
 	keyBindings[WK_D] =  	XKeysymToKeycode(GLWin.dpy, XK_D);
 	keyBindings[WK_A] = 	XKeysymToKeycode(GLWin.dpy, XK_A);
+	keyBindings[WK_X] = 	XKeysymToKeycode(GLWin.dpy, XK_X);
 	keyBindings[WK_PRIOR] = XKeysymToKeycode(GLWin.dpy,XK_Prior);
 	keyBindings[WK_NEXT] = 	XKeysymToKeycode(GLWin.dpy, XK_Next);
 }

@@ -298,43 +298,40 @@ void update()
 
 	if(isKeyDown(WK_A))						/* Is SPACE kes being pressed? */
 	{
-		rotxx+=1;						/* toggle wireframe/fill mode*/
-		rot=rotxx;
-    roty=0;
-		rotx=1;
-		rotz=0;
+    eyey+=2;
 		resetKey(WK_A);
 	}
 
 	if(isKeyDown(WK_S))						/* Is SPACE kes being pressed? */
 	{
-		rotxx-=1;						/* toggle wireframe/fill mode*/
-    rot=rotxx;
-		roty=0;
-		rotx=1;
-		rotz=0;
+    eyey-=2;
 		resetKey(WK_S);
 	}
 
 
 	if(isKeyDown(WK_Q))						/* Is SPACE kes being pressed? */
 	{
-		rotzz+=1;						/* toggle wireframe/fill mode*/
-		rot=rotzz;
-    roty=0;
-		rotx=0;
-		rotz=1;
+
+    eyex+=2;
 		resetKey(WK_Q);
 	}
 
 	if(isKeyDown(WK_W))						/* Is SPACE kes being pressed? */
 	{
-		rotzz-=1;						/* toggle wireframe/fill mode*/
-    rot=rotzz;
-		roty=0;
-		rotx=0;
-		rotz=1;
+    eyex-=2;
 		resetKey(WK_W);
+	}
+	
+  if(isKeyDown(WK_Z))						/* Is SPACE kes being pressed? */
+	{
+    eyez+=2;
+		resetKey(WK_Z);
+	}
+	
+  if(isKeyDown(WK_X))						/* Is SPACE kes being pressed? */
+	{
+    eyez-=2;
+		resetKey(WK_X);
 	}
 }
 
