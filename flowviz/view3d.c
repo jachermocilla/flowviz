@@ -16,16 +16,13 @@
 
 #include "flowviz.h"
 
-
-#define		MAP_SIZE	  512							/* Size Of Our .RAW Height Map */
 #define		STEP_SIZE	  4							/* Width And Height Of Each Quad */
-#define		HEIGHT_RATIO  0.3f							/* Ratio That The Y Is Scaled According To The X And Z */
+#define		HEIGHT_RATIO  0.3f				/* Ratio That The Y Is Scaled According To The X And Z */
 
-BOOL		bRender = True;								/* Polygon Flag Set To TRUE By Default */
+BOOL		bRender = True;							/* Polygon Flag Set To TRUE By Default */
 
-unsigned char g_HeightMap[MAP_SIZE*MAP_SIZE];			/* Holds The Height Map Data */
 
-float scaleValue = 0.3f;								/* Scale Value For The Terrain 0.3*/
+float scaleValue = 0.3f;						/* Scale Value For The Terrain 0.3*/
 
 float rot=0.0;
 float rotx=0.0;
@@ -56,8 +53,6 @@ void dp(int x,int y, int w,int h)
     }
   }
 }
-
-
 
 void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,
 			   GLdouble centerx, GLdouble centery, GLdouble centerz,
@@ -100,45 +95,13 @@ void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,
 	glTranslated(-eyex,-eyey, -eyez);
 }
 
-
-void LoadTextFile(const char* strName, int nSize,unsigned char *pHeightMap){
-	FILE *fp = fopen(strName,"r");
-        int width;
-        int height;
-        int y,x;
-	int tmp;
-
-	fscanf(fp,"%d %d", &width,&height);
-
-	for (y=0;y< height; y++){
-		for (x=0; x < width;x++){
-			fscanf(fp,"%d",&tmp);
-			pHeightMap[x + (y * MAP_SIZE)]=(unsigned char)tmp;
-		}
-	}
-	fclose(fp);
-}
-
-void LoadGrid(Grid grid, int nSize, unsigned char *pHeightMap){
-	int x,y;
-	Cell cel;	
-
-	for (y=0;y<grid->length;y++){
-		for (x=0;x<grid->width;x++){
-			cel = grid->cells[y][x];
-      pHeightMap[x + (y * MAP_SIZE)]=cel->elevation;
-		}
-	}
-}
-
-int Height(Grid grid, int X, int Y)		/* This Returns The Height From A Height Map Index */
+int Height(Grid grid, int X, int Y)	
 {
-	int x = X % (int)(grid->width);								/* Error Check Our x Value */
-	int y = Y % (int)(grid->length);								/* Error Check Our y Value */
+	int x = X % (int)(grid->width);						
+	int y = Y % (int)(grid->length);
 
-	if(!grid) return 0;							/* Make Sure Our Data Is Valid */
-
-	return (int)(grid->cells[y][x]->elevation);				/* Index Into Our Height Array And Return The Height */
+	if(!grid) return 0;						
+	return (int)(grid->cells[y][x]->elevation);
 }
 
 void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Particular Index, Depending On The Height Index */
@@ -153,7 +116,7 @@ void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Parti
 	}
 }
 
-void get_point_from_dir(int dir, Point p){
+void GetPointFromDir(int dir, Point p){
 	switch (dir){
 		case I_NW: p->x-=1;p->y-=1;break;
 		case I_N: p->y-=1; break;
@@ -185,7 +148,7 @@ void RenderFlowMap(int n, Grid grid, int maxsteps){
         glColor3f(1.0f,1.0f,0.0f);
         glVertex3i(p.x,(int)grid->cells[p.y][p.x]->elevation,p.y);
         flowdir = flow_map->direction[p.y][p.x];
-        get_point_from_dir(flowdir, &p);
+        GetPointFromDir(flowdir, &p);
       }
     }
   glEnd();
@@ -375,32 +338,12 @@ void update()
 	}
 }
 
-int view3d(int argc, char **argv )
-{
-	createGLWindow("FlowViz",640,480,24,False); /* Create our window*/
-
-	/*LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap);*/ /* Load raw data */
-	LoadTextFile(argv[1], MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
-
-	run();												/* Start Event-Loop */
-
-	killGLWindow();										/* shutdown window */
-
-	return 0;
-}
 
 int view3dGrid(Grid grid)
 {
 	createGLWindow("FlowViz",640,480,24,False); /* Create our window*/
-
-
-	/*LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap); *//* Load raw data */
-	LoadGrid(grid, MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
-
 	run();												/* Start Event-Loop */
-
 	killGLWindow();										/* shutdown window */
-
 	return 0;
 }
 
