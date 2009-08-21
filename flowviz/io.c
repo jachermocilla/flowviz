@@ -17,11 +17,13 @@ Grid load_raw(char *fname){
 	for (i=0;i< length; i++){
 		for (j=0; j < width;j++){
 			cel=(Cell)malloc(sizeof(struct _cell));
-			cel->x = j;
+			/*
+      cel->x = j;
 			cel->y = i;
+      */
 			retval=fscanf(fp,"%d",&tmp);
 			cel->elevation=(double)tmp;
-			cel->capacity=1;	/*assumed unit capacity */
+			/*cel->capacity=1;*/	/*assumed unit capacity */
 			grd->cells[i][j] = cel;
 		}
 	}
@@ -38,19 +40,19 @@ Grid load_asc(char *fname){
   float tmp2;
 
 
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%d",&width);
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%d",&length);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%d",&width);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%d",&length);
 
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%f",&tmp2);
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%f",&tmp2);
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%f",&tmp2);
-  fscanf(fp,"%s",buff);
-  fscanf(fp,"%d",&tmp);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%f",&tmp2);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%f",&tmp2);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%f",&tmp2);
+  retval=fscanf(fp,"%s",buff);
+  retval=fscanf(fp,"%d",&tmp);
 
 
 	printf("%d %d\n",width,length);
@@ -61,13 +63,15 @@ Grid load_asc(char *fname){
 	for (i=0;i< length; i++){
 		for (j=0; j < width;j++){
 			cel=(Cell)malloc(sizeof(struct _cell));
+      /*
 			cel->x = j;
 			cel->y = i;
+      */
 			retval=fscanf(fp,"%d",&tmp);
       if (tmp==-9999)
         tmp=0;
 			cel->elevation=(double)tmp;
-			cel->capacity=1;	/*assumed unit capacity */
+			/*cel->capacity=1;*/	/*assumed unit capacity */
 			grd->cells[i][j] = cel;
 		}
 	}

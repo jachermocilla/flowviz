@@ -109,7 +109,6 @@ void LoadTextFile(const char* strName, int nSize,unsigned char *pHeightMap){
 	int tmp;
 
 	fscanf(fp,"%d %d", &width,&height);
-	//printf("%d %d\n",width,height);
 
 	for (y=0;y< height; y++){
 		for (x=0; x < width;x++){
@@ -380,7 +379,7 @@ int view3d(int argc, char **argv )
 {
 	createGLWindow("FlowViz",640,480,24,False); /* Create our window*/
 
-	//LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
+	/*LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap);*/ /* Load raw data */
 	LoadTextFile(argv[1], MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
 
 	run();												/* Start Event-Loop */
@@ -395,7 +394,7 @@ int view3dGrid(Grid grid)
 	createGLWindow("FlowViz",640,480,24,False); /* Create our window*/
 
 
-	//LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
+	/*LoadRawFile("Data/Terrain.raw", MAP_SIZE * MAP_SIZE, g_HeightMap); *//* Load raw data */
 	LoadGrid(grid, MAP_SIZE * MAP_SIZE, g_HeightMap); /* Load raw data */
 
 	run();												/* Start Event-Loop */
