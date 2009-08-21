@@ -2,7 +2,7 @@
 #define __FLOWVIZ_H__
 
 /* Maximum dimensions of the raster */
-#define MAX_WIDTH 	1000
+#define MAX_WIDTH 	6001
 #define MAX_LENGTH 	6001
 
 /* Maximum elevation and capacity */
