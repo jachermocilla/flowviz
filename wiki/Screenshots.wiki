@@ -1,6 +1,0 @@
-Mt. Makiling
-
-http://flowviz.googlecode.com/svn/trunk/flowviz/ss01.png
-
-
-http://flowviz.googlecode.com/svn/trunk/flowviz/ss02.png
