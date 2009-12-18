@@ -1,1 +1,2 @@
   * [http://www2.jpl.nasa.gov/srtm/]
+  * [http://srtm.csi.cgiar.org/]
