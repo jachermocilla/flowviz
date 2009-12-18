@@ -2,3 +2,4 @@
   * [http://srtm.csi.cgiar.org/]
   * [http://www.vterrain.org/Elevation/SRTM/]
   * [http://en.wikipedia.org/wiki/ESRI_grid]
+  * [http://www.gdal.org/]
