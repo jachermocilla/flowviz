@@ -1,2 +1,3 @@
   * [http://www2.jpl.nasa.gov/srtm/]
   * [http://srtm.csi.cgiar.org/]
+  * [http://www.vterrain.org/Elevation/SRTM/]
