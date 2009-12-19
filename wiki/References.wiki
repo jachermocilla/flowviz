@@ -4,3 +4,4 @@
   * [http://en.wikipedia.org/wiki/ESRI_grid]
   * [http://www.gdal.org/]
   * [http://en.wikipedia.org/wiki/World_Geodetic_System]
+  * [http://www.soi.city.ac.uk/~jwo/landserf/landserf230/doc/howto/srtm.html]
