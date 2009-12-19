@@ -3,4 +3,4 @@
   * [http://www.vterrain.org/Elevation/SRTM/]
   * [http://en.wikipedia.org/wiki/ESRI_grid]
   * [http://www.gdal.org/]
-  * [http://en.wikipedia.orgwiki/World_Geodetic_System]
+  * [http://en.wikipedia.org/wiki/World_Geodetic_System]
