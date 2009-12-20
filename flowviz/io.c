@@ -17,6 +17,8 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     int             nXSize;
     int             nSize = width*height;
     int             i,j;
+	  Grid grd;
+  	Cell cel;
 
     /* Load all registered drivers */
     GDALAllRegister();
@@ -83,6 +85,11 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     GDALRasterIO( hBand, GF_Read, x, y , width, height,
                     pafScanline, width, height, GDT_Float32,
                       0, 0);
+
+    //Create the grid
+	  grd = (Grid)malloc(sizeof(struct _grid));
+	  grd->width=width;
+	  grd->length=height;
 
     for (i=0; i<height; i++)
     {
