@@ -19,6 +19,7 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     int             i,j;
 	  Grid grd;
   	Cell cel;
+    float           tmp,val;
 
     /* Load all registered drivers */
     GDALAllRegister();
@@ -95,11 +96,19 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     {
       for (j=0; j<width; j++)
       {
-        printf(" %f ",pafScanline[i+j*width]);
+        cel=(Cell)malloc(sizeof(struct _cell));
+        val = pafScanline[i+j*width];
+        if (val == -9999.00)
+          val = 0;
+        tmp =  val*(255.0/(adfMinMax[1]-adfMinMax[0]));
+        cel->elevation = (double)ceil(tmp);
+        grd->cells[i][j] = cel;
+        //printf(" %f ",tmp);
+        //printf(" %f ",pafScanline[i+j*width]);
       }
-      printf("\n");
+      //printf("\n");
     }
-
+    return grd;
 }
 
 
