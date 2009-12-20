@@ -9,7 +9,7 @@ int main(int argc,char *argv[])
 		exit(1);
 	}
   //grid=load_gdal(argv[1],1400,1000,512,512);
-  grid=load_gdal(argv[1],1400,1400,512,512);
+  grid=load_gdal(argv[1],1024,512,2048,2048);
 	//grid=load_raw(argv[1]);
 	/*grid=generate_random_grid(10,10);*/
 	/*print_grid(grid);*/
