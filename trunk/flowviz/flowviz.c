@@ -18,14 +18,20 @@ int main(int argc,char *argv[])
 
 
 	if (argc < 2){
-		printf("Usage: flowviz <DEM>\n");
+		printf("Usage: flowviz <DEM> <longitude> <latitude>\n");
 		exit(1);
 	}
+
+  if (argv[2] != NULL && argv[3] != NULL){
+    longitude = atof(argv[2]);
+    latitude = atof(argv[3]);
+  }
+
 
   xoffset = (int)((longitude - min_long)/pixel_size)-(dimension*0.5f);
   yoffset = (int)(block_size-((latitude - min_lat)/pixel_size))-(dimension*0.5f);
 
-
+  
 
 
   //grid=load_gdal(argv[1],1400,1000,512,512);
