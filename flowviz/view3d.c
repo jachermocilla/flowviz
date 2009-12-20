@@ -19,6 +19,7 @@
 #define		STEP_SIZE	  4							/* Width And Height Of Each Quad */
 #define		HEIGHT_RATIO  0.35f				/* Ratio That The Y Is Scaled According To The X And Z */
 
+
 BOOL		bRender = True;							/* Polygon Flag Set To TRUE By Default */
 
 
@@ -38,11 +39,14 @@ GLdouble upx=0,upy=1,upz=0;
 
 int simulation_time=0;
 /*struct _point drop_points[]={{241,234,0},{243,232,0},{230,236,0}};*/
-struct _point drop_points[1000];
+struct _point drop_points[100];
 
-void dp(int x,int y, int w,int h)
+void dp(Grid grid, int w,int h)
 {
   int i,j,k=0;
+  int x=(grid->width/2)-(w/2);
+  int y=(grid->length/2)-(h/2);
+
   for (i=y;i<(y+h);i++)
   {
     for (j=x;j<(x+w);j++)
@@ -143,7 +147,7 @@ void RenderFlowMap(int n, Grid grid, int maxsteps){
   
   flow_map=grid->flow_map;
 
-  dp(236,229,100,10);
+  dp(grid,10,10);
 
   glBegin(GL_LINES);
     for (i=0;i<n;i++){
@@ -257,7 +261,7 @@ int drawGLScene(GLvoid)									/* Here's Where We Do All The Drawing */
 	glTranslatef(-(grid->width)/2.0,0,-(grid->width)/2.0);
 
 	RenderHeightMap(grid);						/* Render The Height Map */
-	RenderFlowMap(1000,grid,200);						/* Render The Height Map */
+	RenderFlowMap(100,grid,200);						/* Render The Height Map */
 	return True;										/* Keep Going */
 }
 
