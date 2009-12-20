@@ -59,7 +59,7 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     adfMinMax[1] = GDALGetRasterMaximum( hBand, &bGotMax );
     if( ! (bGotMin && bGotMax) )
       GDALComputeRasterMinMax( hBand, TRUE, adfMinMax );
-    printf( "Min=%.3fd, Max=%.3f\n", adfMinMax[0], adfMinMax[1] );
+    printf( "Min=%.3f, Max=%.3f\n", adfMinMax[0], adfMinMax[1] );
     if( GDALGetOverviewCount(hBand) > 0 )
       printf( "Band has %d overviews.\n", GDALGetOverviewCount(hBand));
     if( GDALGetRasterColorTable( hBand ) != NULL )
