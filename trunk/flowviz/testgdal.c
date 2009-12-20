@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <gdal.h>
-int main()
+int main(int argc, char **argv)
 {
     GDALDatasetH  hDataset;
-    char *pszFilename = "/media/DATA/srtm_61_10.asc";
+    //char *pszFilename = "/media/DATA/srtm_61_10.asc";
     GDALDriverH   hDriver;
     double        adfGeoTransform[6];
     GDALRasterBandH hBand;
@@ -15,7 +15,7 @@ int main()
     int i;
 
     GDALAllRegister();
-    hDataset = GDALOpen( pszFilename, GA_ReadOnly );
+    hDataset = GDALOpen( argv[1], GA_ReadOnly );
     if( hDataset == NULL )
     {
         printf("Cannot open file.");
