@@ -100,7 +100,8 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
         val = pafScanline[j+i*width];
         if (val == -9999.00)
           val = 0;
-        tmp =  val*(255.0/(adfMinMax[1]-adfMinMax[0]));
+        tmp =  val*(256.0/(adfMinMax[1]-adfMinMax[0]));
+        //tmp=val;
         cel->elevation = (double)ceil(tmp);
         grd->cells[i][j] = cel;
         //printf(" %f ",tmp);

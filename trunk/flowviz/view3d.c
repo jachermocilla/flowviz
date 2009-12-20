@@ -17,7 +17,7 @@
 #include "flowviz.h"
 
 #define		STEP_SIZE	  4							/* Width And Height Of Each Quad */
-#define		HEIGHT_RATIO  0.3f				/* Ratio That The Y Is Scaled According To The X And Z */
+#define		HEIGHT_RATIO  0.35f				/* Ratio That The Y Is Scaled According To The X And Z */
 
 BOOL		bRender = True;							/* Polygon Flag Set To TRUE By Default */
 
@@ -113,6 +113,11 @@ void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Parti
 		float fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
 		/* Assign This Blue Shade To The Current Vertex */
 		glColor3f(0, 0, fColor );
+    if (Height(grid, x, y )<2){
+      fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
+		  glColor3f(0, fColor,0  );
+    }
+
 	}
 }
 
