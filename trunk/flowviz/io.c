@@ -13,17 +13,23 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     int             nBlockXSize, nBlockYSize;
     int             bGotMin, bGotMax;
     double          adfMinMax[2];
-    float *pafScanline;
-    int   nXSize;
-    int i;
+    float           *pafScanline;
+    int             nXSize;
+    int             nSize = width*height;
+    int             i,j;
 
+    /* Load all registered drivers */
     GDALAllRegister();
+
+    /* Open the data set */
     hDataset = GDALOpen( fname, GA_ReadOnly );
     if( hDataset == NULL )
     {
         printf("Cannot open file.");
     }
+
     hDriver = GDALGetDatasetDriver( hDataset );
+
     printf( "Driver: %s/%s\n",
             GDALGetDriverShortName( hDriver ),
             GDALGetDriverLongName( hDriver ) );
@@ -48,6 +54,7 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
             GDALGetColorInterpretationName(
             GDALGetRasterColorInterpretation(hBand)) 
     );
+    
     adfMinMax[0] = GDALGetRasterMinimum( hBand, &bGotMin );
     adfMinMax[1] = GDALGetRasterMaximum( hBand, &bGotMax );
     if( ! (bGotMin && bGotMax) )
@@ -60,6 +67,9 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
                  GDALGetColorEntryCount(
                  GDALGetRasterColorTable( hBand ) ) 
       );
+    
+    
+    /*
     nXSize = GDALGetRasterBandXSize( hBand );
     pafScanline = (float *) CPLMalloc(sizeof(float)*nXSize);
     GDALRasterIO( hBand, GF_Read, 0, 0, nXSize, 1, 
@@ -67,6 +77,20 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
                      0, 0 );
     for (i=0;i<20;i++){
       printf("%f\n", pafScanline[i]);
+    } */
+    
+    pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
+    GDALRasterIO( hBand, GF_Read, x, y , width, height,
+                    pafScanline, width, height, GDT_Float32,
+                      0, 0);
+
+    for (i=0; i<height; i++)
+    {
+      for (j=0; j<width; j++)
+      {
+        printf(" %f ",pafScanline[i+j*width]);
+      }
+      printf("\n");
     }
 
 }
