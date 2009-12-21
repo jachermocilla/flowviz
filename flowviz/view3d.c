@@ -116,10 +116,17 @@ void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Parti
 	{
 		float fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
 		/* Assign This Blue Shade To The Current Vertex */
-		glColor3f(0, 0, fColor );
     if (Height(grid, x, y )<2){
-      fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
-		  glColor3f(0, fColor,0  );
+      //fColor = (-0.15f + ((Height(grid, x, y )+127) / 256.0f));
+		  glColor3f(0,0 ,fColor );
+    }
+    else if (Height(grid, x, y )>=2 && Height(grid, x, y )<5)
+    {
+		  glColor3f(fColor, fColor, fColor  );
+    }
+    else
+    {
+		  glColor3f(0, 1.0-fColor ,0 );
     }
 
 	}
