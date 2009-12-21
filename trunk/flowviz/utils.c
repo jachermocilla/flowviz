@@ -91,3 +91,16 @@ Point find_peak(Grid grid){
   }
   return p;
 }
+
+int minimum(int a, int b)
+{
+  if (a < b)
+  {
+    return a;
+  }
+  else
+  {
+    return b;
+  }
+}
+
