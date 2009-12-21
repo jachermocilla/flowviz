@@ -14,7 +14,7 @@ int main(int argc,char *argv[])
   float latitude=13.2552f, 
         longitude=123.686;
 
-  int xoffset,yoffset, dimension=512;
+  int xoffset,yoffset, dimension=2048;
 
 
 	if (argc < 2){
