@@ -75,6 +75,32 @@ void print_flow_map(Grid g){
 }
 
 
+//FIXME
+void find_catchment(Grid grid, int x, int y, int w, int h)
+{
+  int i,j;
+  Cell c;
+  FlowMap flow_map=grid->flow_map;
+  for (i=y;i<(y+h);i++)
+  {
+    for (j=x;j<(x+w);j++){
+      if (flow_map->direction[i][j]==CENTER)
+      {
+        c = grid->cells[i][j];
+        printf("here");
+        if (c->elevation > 2)
+        {   
+          printf("%d,%d\n",j,i);
+        }
+      }
+    }
+  }
+
+  
+}
+
+
+
 Point find_peak(Grid grid){
   int w,l,h;
   Point p=(Point)malloc(sizeof(struct _point));

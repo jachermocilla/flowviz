@@ -268,7 +268,7 @@ int drawGLScene(GLvoid)									/* Here's Where We Do All The Drawing */
 	glTranslatef(-(grid->width)/2.0,0,-(grid->width)/2.0);
 
 	RenderHeightMap(grid);						/* Render The Height Map */
-	RenderFlowMap(100,grid,200);						/* Render The Height Map */
+	RenderFlowMap(100,grid,500);						/* Render The Height Map */
 	return True;										/* Keep Going */
 }
 
