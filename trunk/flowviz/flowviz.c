@@ -64,9 +64,9 @@ int main(int argc,char *argv[])
 	/*grid=generate_random_grid(10,10);*/
 	/*print_grid(grid);*/
 	d8(grid);
-	/*print_flow_map(grid);*/
-  find_catchment(grid,xoffset,yoffset,xdim*2,ydim*2);
-	//view3dGrid(grid);
+	//print_flow_map(grid);
+  find_catchment(grid,0,0,2048,2048);
+	view3dGrid(grid);
 
 	return 0;
 }
