@@ -58,6 +58,14 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
             GDALGetRasterColorInterpretation(hBand)) 
     );
     
+    transform_parameters.min_long=adfGeoTransform[0];
+    transform_parameters.min_lat=10;
+    transform_parameters.block_size=GDALGetRasterXSize( hDataset );
+    transform_parameters.pixel_size=adfGeoTransform[1];
+        
+    
+
+
     adfMinMax[0] = GDALGetRasterMinimum( hBand, &bGotMin );
     adfMinMax[1] = GDALGetRasterMaximum( hBand, &bGotMax );
     if( ! (bGotMin && bGotMax) )

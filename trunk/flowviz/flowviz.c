@@ -29,7 +29,7 @@ int main(int argc,char *argv[])
 
   x = (int)((longitude - min_long)/pixel_size);
   y = (int)(block_size-((latitude - min_lat)/pixel_size));
-
+  
   xdim = minimum(x,(maxx-x));
   ydim = minimum(y,(maxy-y));
  
@@ -41,11 +41,11 @@ int main(int argc,char *argv[])
   printf("xdim=%d, ydim=%d\n",xdim,ydim);
 
   //comment out the following to maximize the view
-  /*int clip_size=256;
+  int clip_size=256;
   xdim=ydim=clip_size;
   xoffset = x-clip_size;
   yoffset = y-clip_size;
-  */
+  
 
 
   //xoffset = (int)((longitude - min_long)/pixel_size)-(dimension*0.5f);
@@ -58,6 +58,8 @@ int main(int argc,char *argv[])
   //grid=load_gdal(argv[1],1400,1000,512,512);
   //grid=load_gdal(argv[1],3400,1069,2048,2048);
   grid=load_gdal(argv[1],xoffset,yoffset,xdim*2,ydim*2);
+  x_y_to_longi_lati(&transform_parameters,x,y,&longitude, &latitude);
+  printf("%f,%f\n",longitude,latitude);
 	//grid=load_raw(argv[1]);
 	/*grid=generate_random_grid(10,10);*/
 	/*print_grid(grid);*/
