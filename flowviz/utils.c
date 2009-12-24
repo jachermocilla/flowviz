@@ -71,6 +71,7 @@ void print_flow_map(Grid g){
 			printf(" %d ",flow_map->direction[y][x]);
 		}
 		printf("\n");
+//    getchar();
 	}
 }
 
@@ -79,24 +80,23 @@ void print_flow_map(Grid g){
 void find_catchment(Grid grid, int x, int y, int w, int h)
 {
   int i,j;
+  float longi, lati;
   Cell c;
   FlowMap flow_map=grid->flow_map;
   for (i=y;i<(y+h);i++)
   {
     for (j=x;j<(x+w);j++){
-      if (flow_map->direction[i][j]==CENTER)
+      if (flow_map->direction[i][j]==I_CENTER)
       {
-        c = grid->cells[i][j];
-        printf("here");
-        if (c->elevation > 2)
-        {   
-          printf("%d,%d\n",j,i);
+        c=grid->cells[i][j];
+        if (c->elevation > 10)
+        {
+          x_y_to_longi_lati(&transform_parameters, j, i, &longi, &lati);
+          printf("%f,%f\n",longi,lati);
         }
       }
     }
   }
-
-  
 }
 
 
