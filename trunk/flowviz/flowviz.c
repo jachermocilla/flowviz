@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "flowviz.h"
+#include "layer.h"
+#include "project.h"
+#include "elevation.h"
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[])
+{
+    Layer elevation;
+    elevation = Elevation_load(argv[1],0,0,512,512);
+    printf("%s\n", elevation->name);    
+}
+
+int main2(int argc,char *argv[])
 {
   float min_lat=10,
         max_lat=15,

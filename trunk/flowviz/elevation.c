@@ -37,7 +37,6 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     ElevationMetaData meta_data;
     Layer layer;
 
-    meta_data = ElevationMetaData_new();
 
     /* Load all registered drivers */
     GDALAllRegister();
@@ -82,6 +81,7 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     if( ! (bGotMin && bGotMax) )
       GDALComputeRasterMinMax( hBand, TRUE, adfMinMax );
     printf( "Min=%.3f, Max=%.3f\n", adfMinMax[0], adfMinMax[1] );
+    
     if( GDALGetOverviewCount(hBand) > 0 )
       printf( "Band has %d overviews.\n", GDALGetOverviewCount(hBand));
     if( GDALGetRasterColorTable( hBand ) != NULL )
@@ -89,7 +89,10 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
                  GDALGetColorEntryCount(
                  GDALGetRasterColorTable( hBand ) ) 
       );
-
+    
+    
+    printf("*********");
+    meta_data = ElevationMetaData_new();
     meta_data->min_lat=0;
     meta_data->max_lat=0;
     meta_data->min_long=0;
@@ -99,7 +102,11 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     meta_data->min_elev=0;
     meta_data->max_elev=0;
 
+    
+
     layer = Layer_new("Elevation", meta_data, width, height);
+
+    
 
     pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
     GDALRasterIO( hBand, GF_Read, x, y , width, height,
@@ -114,9 +121,10 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
         if (val == -9999.00)
           val = 0;
         cel = Elevation_new(val);
-        layer->data[i+(j*width)]=(Elevation)cel;
+        layer->data[i+(j*width)]=cel;
       }
     }
+    
     return layer;
 
 

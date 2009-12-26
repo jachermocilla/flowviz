@@ -11,7 +11,7 @@ Layer Layer_new(char *name, void *meta_data, int width, int length)
   layer->meta_data=meta_data;
   layer->width=width;
   layer->length=length;
-  layer->data=(void *)malloc(width*length);
+  layer->data=(void *)malloc(width*length*sizeof(void *));
   return layer;
 }
 
