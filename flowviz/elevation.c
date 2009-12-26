@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <gdal.h>
-
+#include <cpl_conv.h>
 #include "layer.h"
 #include "elevation.h"
 
@@ -90,7 +90,6 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
       );
     
     
-    printf("*********");
     meta_data = ElevationMetaData_new();
     meta_data->min_lat=0;
     meta_data->max_lat=0;
