@@ -7,9 +7,21 @@
 
 int main(int argc, char *argv[])
 {
+    int i, j;
     Layer elevation;
+    Elevation elev;
     elevation = Elevation_load(argv[1],0,0,512,512);
-    printf("%s\n", elevation->name);    
+    printf("%s\n", elevation->name);
+    for (i=0;i<elevation->length;i++)
+    {
+      for (j=0;j<elevation->width;j++)
+      {
+        elev = (Elevation)elevation->data[i+j*(elevation->width)];
+        printf(" %5.2f ",elev->value);
+      }
+      printf("\n");
+    }
+    
 }
 
 int main2(int argc,char *argv[])

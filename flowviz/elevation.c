@@ -106,8 +106,6 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
 
     layer = Layer_new("Elevation", meta_data, width, height);
 
-    
-
     pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
     GDALRasterIO( hBand, GF_Read, x, y , width, height,
                     pafScanline, width, height, GDT_Float32,
