@@ -4,6 +4,9 @@
 
 #include "flowviz.h"
 
+void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati);
+
+
 Grid generate_random_grid(int width, int length){
 	int i,j;
 	Cell cel;

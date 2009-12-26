@@ -6,7 +6,7 @@ FLAGS=-lgdal1.5.0 -I/usr/include/gdal
 all: flowviz
 
 %.o: %.c
-	$(CC) $(FLAGS) `sdl-config --cflags --libs`  -Os -Wall -pedantic -ffloat-store -c -g -o  $@ $<
+	$(CC) $(FLAGS) `sdl-config --cflags --libs`  -Os -Wall -ffloat-store -c -g -o  $@ $<
 
 clean:
 	rm -f *.o;rm flowviz

@@ -28,10 +28,9 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     int             bGotMin, bGotMax;
     double          adfMinMax[2];
     float           *pafScanline;
-    int             nXSize;
     int             nSize = width*height;
     int             i,j;
-    float           tmp,val;
+    float           val;
 
     Elevation cel;
     ElevationMetaData meta_data;
