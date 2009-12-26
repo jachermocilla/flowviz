@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gdal.h>
+#include <cpl_conv.h>
+
 #include "flowviz.h"
 
 Grid load_gdal(char *fname, int x, int y, int width, int height)
@@ -14,7 +16,6 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
     int             bGotMin, bGotMax;
     double          adfMinMax[2];
     float           *pafScanline;
-    int             nXSize;
     int             nSize = width*height;
     int             i,j;
 	  Grid grd;

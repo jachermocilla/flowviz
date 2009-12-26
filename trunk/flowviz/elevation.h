@@ -20,5 +20,7 @@ typedef struct _elevation_meta_data
 
 Elevation Elevation_new(float value);
 ElevationMetaData ElevationMetaData_new();
+Layer Elevation_load(char *fname, int x, int y, int width, int height);
+void Elevation_view();
 
-#endif;
+#endif

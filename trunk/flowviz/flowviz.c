@@ -8,9 +8,7 @@
 int main(int argc, char *argv[])
 {
     Project project;
-    int i, j;
     Layer elevation, elevation2;
-    Elevation tmp;
 
     project = Project_new("Flood Simulation");
     elevation = Elevation_load(argv[1],0,0,1024,1024);
@@ -36,6 +34,7 @@ int main(int argc, char *argv[])
 */    
 }
 
+/*
 int main2(int argc,char *argv[])
 {
   float min_lat=10,
@@ -94,8 +93,8 @@ int main2(int argc,char *argv[])
   x_y_to_longi_lati(&data_set_param,x,y,&longitude, &latitude);
   printf("%f,%f\n",longitude,latitude);
 	//grid=load_raw(argv[1]);
-	/*grid=generate_random_grid(10,10);*/
-	/*print_grid(grid);*/
+	//grid=generate_random_grid(10,10);
+	//print_grid(grid);
 	d8(grid);
 	//print_flow_map(grid);
   find_catchment(grid);
@@ -103,3 +102,4 @@ int main2(int argc,char *argv[])
 
 	return 0;
 }
+*/
