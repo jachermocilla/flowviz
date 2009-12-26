@@ -99,8 +99,8 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     meta_data->max_long=0;
     meta_data->pixel_size=0;
     meta_data->block_size=0;
-    meta_data->min_elev=0;
-    meta_data->max_elev=0;
+    meta_data->min_elev=adfMinMax[0];
+    meta_data->max_elev=adfMinMax[1];
 
     
 
