@@ -3,7 +3,7 @@
 #include "project.h"
 
 
-Project Project_new(char name)
+Project Project_new(char *name)
 {
   Project project;
   project = (Project)malloc(sizeof(struct _project));
@@ -21,5 +21,17 @@ void Project_add(Project project, Layer layer)
 {
   layer->next = project->layers;
   project->layers = layer;
+}
+
+
+Layer Project_getLayer(Project project, char *name)
+{
+  Layer tmp;
+  tmp = project->layers;
+  while (tmp != NULL && strcmp(tmp->name,name)!=0)
+  { 
+    tmp=tmp->next;
+  }
+  return tmp;
 }
 

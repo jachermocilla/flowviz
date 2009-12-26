@@ -7,10 +7,22 @@
 
 int main(int argc, char *argv[])
 {
+    Project project;
     int i, j;
-    Layer elevation;
-    Elevation elev;
+    Layer elevation, elevation2;
+    Elevation tmp;
+
+    project = Project_new("Flood Simulation");
     elevation = Elevation_load(argv[1],0,0,512,512);
+    Project_add(project, elevation);
+    elevation2 = Project_getLayer(project,"elevation");  
+    if (elevation2 != NULL)
+    {
+      //printf("width: %d\n",elevation2->width);
+      Elevation_view(elevation2);
+    }
+  
+/*
     printf("%s\n", elevation->name);
     for (i=0;i<elevation->length;i++)
     {
@@ -21,7 +33,7 @@ int main(int argc, char *argv[])
       }
       printf("\n");
     }
-    
+*/    
 }
 
 int main2(int argc,char *argv[])
@@ -87,7 +99,7 @@ int main2(int argc,char *argv[])
 	d8(grid);
 	//print_flow_map(grid);
   find_catchment(grid);
-	view3dGrid(grid);
+	//view3dGrid(grid);
 
 	return 0;
 }

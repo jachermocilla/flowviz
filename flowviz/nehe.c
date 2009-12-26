@@ -30,7 +30,7 @@ static int  keyBindings[20];
 
 static GLWindow GLWin;
 
-extern void drawGLScene(void);
+extern void drawGLScene();
 extern void update(void);
 
 static void initGL(void);
