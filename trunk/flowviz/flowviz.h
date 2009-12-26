@@ -58,18 +58,20 @@ typedef struct _point {
 	int x,y,z;
 }*Point;
 
-typedef struct _transform_parameters{
+typedef struct _data_set_param{
   float min_lat;
   float max_lat;
   float min_long;
   float max_long;
   float pixel_size;
   float block_size;
-}*TransformParameters;
+  float min_elev;
+  float max_elev;
+}*DataSetParam;
 
 
 Grid grid;
-struct _transform_parameters transform_parameters;
+struct _data_set_param data_set_param;
 
 
 /*io.c*/

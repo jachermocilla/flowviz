@@ -1,4 +1,4 @@
-OBJECTS= flowviz.o io.o utils.o d8.o view3d.o nehe.o
+OBJECTS= flowviz.o io.o utils.o d8.o view3d.o nehe.o layer.o project.o elevation.o
 
 CC= gcc
 FLAGS=-lgdal1.5.0 -I/usr/include/gdal
