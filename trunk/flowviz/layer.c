@@ -3,6 +3,9 @@
 #include <string.h>
 #include "layer.h"
 
+/**
+ */
+
 Layer Layer_new(char *name, void *meta_data, int width, int length)
 {
   Layer layer;
