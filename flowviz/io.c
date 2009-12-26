@@ -58,14 +58,7 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
             GDALGetRasterColorInterpretation(hBand)) 
     );
     
-    transform_parameters.min_long=adfGeoTransform[0];
-    transform_parameters.min_lat=10;
-    transform_parameters.block_size=GDALGetRasterXSize( hDataset );
-    transform_parameters.pixel_size=adfGeoTransform[1];
         
-    
-
-
     adfMinMax[0] = GDALGetRasterMinimum( hBand, &bGotMin );
     adfMinMax[1] = GDALGetRasterMaximum( hBand, &bGotMax );
     if( ! (bGotMin && bGotMax) )
@@ -79,6 +72,12 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
                  GDALGetRasterColorTable( hBand ) ) 
       );
     
+    data_set_param.min_long=adfGeoTransform[0];
+    data_set_param.min_lat=10;
+    data_set_param.block_size=GDALGetRasterXSize( hDataset );
+    data_set_param.pixel_size=adfGeoTransform[1];
+    data_set_param.min_elev=adfMinMax[0];
+    data_set_param.max_elev=adfMinMax[1];
     
     /*
     nXSize = GDALGetRasterBandXSize( hBand );
@@ -108,8 +107,8 @@ Grid load_gdal(char *fname, int x, int y, int width, int height)
         val = pafScanline[j+i*width];
         if (val == -9999.00)
           val = 0;
-        tmp =  val*(256.0/(adfMinMax[1]-adfMinMax[0]));
-        //tmp=val;
+        //tmp =  val*(256.0/(adfMinMax[1]-adfMinMax[0]));
+        tmp=val;
         cel->elevation = (double)ceil(tmp);
         grd->cells[i][j] = cel;
         //printf(" %f ",tmp);

@@ -99,13 +99,19 @@ void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,
 	glTranslated(-eyex,-eyey, -eyez);
 }
 
+int NormalizeElevation(float elevation)
+{
+  return (int)(elevation*(256.0/(data_set_param.max_elev-data_set_param.min_elev)));
+}
+
+
 int Height(Grid grid, int X, int Y)	
 {
 	int x = X % (int)(grid->width);						
 	int y = Y % (int)(grid->length);
 
 	if(!grid) return 0;						
-	return (int)(grid->cells[y][x]->elevation);
+	return NormalizeElevation((grid->cells[y][x]->elevation));
 }
 
 void SetVertexColor(Grid grid, int x, int y)	/* Sets The Color Value For A Particular Index, Depending On The Height Index */
@@ -162,7 +168,7 @@ void RenderFlowMap(int n, Grid grid, int maxsteps){
 		  p.y=drop_points[i].y;
 	    for (t=0;t<maxsteps;t++){
         glColor3f(1.0f,1.0f,0.0f);
-        glVertex3i(p.x,(int)grid->cells[p.y][p.x]->elevation,p.y);
+        glVertex3i(p.x,NormalizeElevation(grid->cells[p.y][p.x]->elevation),p.y);
         flowdir = flow_map->direction[p.y][p.x];
         GetPointFromDir(flowdir, &p);
       }
@@ -268,7 +274,7 @@ int drawGLScene(GLvoid)									/* Here's Where We Do All The Drawing */
 	glTranslatef(-(grid->width)/2.0,0,-(grid->width)/2.0);
 
 	RenderHeightMap(grid);						/* Render The Height Map */
-	RenderFlowMap(100,grid,500);						/* Render The Height Map */
+	RenderFlowMap(100,grid,200);						/* Render The Height Map */
 	return True;										/* Keep Going */
 }
 

@@ -15,7 +15,6 @@ int main(int argc,char *argv[])
         longitude=123.686;
 
   int xoffset, yoffset, xdim, ydim, x, y, maxx=6001, maxy=6001;
- 
 
 	if (argc < 2){
 		printf("Usage: flowviz <DEM> <longitude> <latitude>\n");
@@ -58,14 +57,14 @@ int main(int argc,char *argv[])
   //grid=load_gdal(argv[1],1400,1000,512,512);
   //grid=load_gdal(argv[1],3400,1069,2048,2048);
   grid=load_gdal(argv[1],xoffset,yoffset,xdim*2,ydim*2);
-  x_y_to_longi_lati(&transform_parameters,x,y,&longitude, &latitude);
+  x_y_to_longi_lati(&data_set_param,x,y,&longitude, &latitude);
   printf("%f,%f\n",longitude,latitude);
 	//grid=load_raw(argv[1]);
 	/*grid=generate_random_grid(10,10);*/
 	/*print_grid(grid);*/
 	d8(grid);
 	//print_flow_map(grid);
-  find_catchment(grid,0,0,2048,2048);
+  find_catchment(grid);
 	view3dGrid(grid);
 
 	return 0;
