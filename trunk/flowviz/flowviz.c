@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     Elevation tmp;
 
     project = Project_new("Flood Simulation");
-    elevation = Elevation_load(argv[1],0,0,4096,4096);
+    elevation = Elevation_load(argv[1],0,0,2048,2048);
     Project_add(project, elevation);
     elevation2 = Project_getLayer(project,"elevation");  
     if (elevation2 != NULL)
