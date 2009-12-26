@@ -15,6 +15,9 @@ typedef struct _layer
   struct _layer *next;  /* Pointer to the next layer in multilayer projects*/
 }*Layer;
 
+
+Layer gElevation;
+
 Layer Layer_new(char *name, void *meta_data ,int width, int length);
 void Layer_delete(Layer *layer);
 

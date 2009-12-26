@@ -171,7 +171,7 @@ void killGLWindow(void)
 }
 
 /* Our event loop */
-void run(void)
+void run()
 {
 	XEvent event;
 
