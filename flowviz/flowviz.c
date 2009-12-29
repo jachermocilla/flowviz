@@ -8,12 +8,26 @@
 
 int main(int argc, char *argv[])
 {
+    int x, y, w, l;
     Project project;
     Layer elevation, deight;
+    float lon, lat;
+    ElevationMetaData meta_data;
+
+    if (argc < 2){
+		  printf("Usage: flowviz <DEM> <longitude> <latitude>\n");
+		  exit(1);
+	  }
+
+    lon = 13.2552f;
+    lat = 123.686f;
 
     project = Project_new("Flood Simulation");
     
-    elevation = Elevation_load(argv[1],0,0,1024,1024);
+
+    meta_data = Elevation_open(argv[1]);
+    lon_lat_to_x_y(lon, lat, &x, &y, &w, &l);
+    elevation = Elevation_load(meta_data,0,0,1024,1024);
     deight = DEight_load(elevation);
     
     Project_add(project, elevation);

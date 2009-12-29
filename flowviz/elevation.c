@@ -18,7 +18,7 @@ ElevationMetaData ElevationMetaData_new()
   return meta_data;
 }
 
-Layer Elevation_load(char *fname, int x, int y, int width, int height)
+ElevationMetaData Elevation_open(char * fname)
 {
     GDALDatasetH  hDataset;
     GDALDriverH   hDriver;
@@ -27,14 +27,7 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     int             nBlockXSize, nBlockYSize;
     int             bGotMin, bGotMax;
     double          adfMinMax[2];
-    float           *pafScanline;
-    int             nSize = width*height;
-    int             i,j;
-    float           val;
-
-    Elevation cel;
     ElevationMetaData meta_data;
-    Layer layer;
 
 
     /* Load all registered drivers */
@@ -99,13 +92,24 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     meta_data->block_size=0;
     meta_data->min_elev=adfMinMax[0];
     meta_data->max_elev=adfMinMax[1];
+    meta_data->hBand=hBand;
+    return meta_data;
+}
 
     
+Layer Elevation_load(ElevationMetaData meta_data, int x, int y, int width, int height)
+{
+    float           *pafScanline;
+    int             nSize = width*height;
+    int             i,j;
+    float           val;
+
+    Elevation cel;
+    Layer layer;
 
     layer = Layer_new("elevation", meta_data, width, height);
-
     pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
-    GDALRasterIO( hBand, GF_Read, x, y , width, height,
+    GDALRasterIO( meta_data->hBand, GF_Read, x, y , width, height,
                     pafScanline, width, height, GDT_Float32,
                       0, 0);
 
@@ -122,6 +126,5 @@ Layer Elevation_load(char *fname, int x, int y, int width, int height)
     }
     
     return layer;
-
 
 }
