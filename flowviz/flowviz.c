@@ -19,15 +19,20 @@ int main(int argc, char *argv[])
 		  exit(1);
 	  }
 
-    lon = 13.2552f;
-    lat = 123.686f;
+    lat = 13.2552f;
+    lon = 123.686f;
+
+    if (argv[2] != NULL && argv[3] != NULL){
+      lon = atof(argv[2]);
+      lat = atof(argv[3]);
+    }
 
     project = Project_new("Flood Simulation");
     
 
     meta_data = Elevation_open(argv[1]);
-    lon_lat_to_x_y(lon, lat, &x, &y, &w, &l);
-    elevation = Elevation_load(meta_data,0,0,1024,1024);
+    lon_lat_to_x_y(meta_data, &lon, &lat, &x, &y, &w, &l);
+    elevation = Elevation_load(meta_data,x,y,w,l);
     deight = DEight_load(elevation);
     
     Project_add(project, elevation);
