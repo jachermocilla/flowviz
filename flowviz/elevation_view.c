@@ -39,7 +39,6 @@ GLdouble eyex=212,eyey=60,eyez=194;
 GLdouble centerx=186, centery=55, centerz=171;
 GLdouble upx=0,upy=1,upz=0;
 
-
 void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,
 			   GLdouble centerx, GLdouble centery, GLdouble centerz,
 			   GLdouble upx,GLdouble upy, GLdouble upz)
