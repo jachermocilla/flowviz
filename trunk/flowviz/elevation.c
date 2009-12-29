@@ -73,7 +73,7 @@ ElevationMetaData Elevation_open(char * fname)
     if( ! (bGotMin && bGotMax) )
       GDALComputeRasterMinMax( hBand, TRUE, adfMinMax );
     printf( "Min=%.3f, Max=%.3f\n", adfMinMax[0], adfMinMax[1] );
-    
+   /* 
     if( GDALGetOverviewCount(hBand) > 0 )
       printf( "Band has %d overviews.\n", GDALGetOverviewCount(hBand));
     if( GDALGetRasterColorTable( hBand ) != NULL )
@@ -82,14 +82,16 @@ ElevationMetaData Elevation_open(char * fname)
                  GDALGetRasterColorTable( hBand ) ) 
       );
     
-    
+    */
+
+
     meta_data = ElevationMetaData_new();
-    meta_data->min_lat=0;
-    meta_data->max_lat=0;
-    meta_data->min_long=0;
-    meta_data->max_long=0;
-    meta_data->pixel_size=0;
-    meta_data->block_size=0;
+    meta_data->min_lat=10;
+    meta_data->max_lat=15;
+    meta_data->min_long=120;
+    meta_data->max_long=125;
+    meta_data->pixel_size=0.000833f;
+    meta_data->block_size=6001;
     meta_data->min_elev=adfMinMax[0];
     meta_data->max_elev=adfMinMax[1];
     meta_data->hBand=hBand;
@@ -106,7 +108,6 @@ Layer Elevation_load(ElevationMetaData meta_data, int x, int y, int width, int h
 
     Elevation cel;
     Layer layer;
-
     layer = Layer_new("elevation", meta_data, width, height);
     pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
     GDALRasterIO( meta_data->hBand, GF_Read, x, y , width, height,

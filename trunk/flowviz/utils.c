@@ -6,7 +6,7 @@
 #include "elevation.h"
 
 void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati);
-
+void lon_lat_to_x_y(ElevationMetaData tparam,float *lon, float *lat, int *x, int *y, int *w, int *l);
 
 Grid generate_random_grid(int width, int length){
 	int i,j;
@@ -136,10 +136,32 @@ int minimum(int a, int b)
   }
 }
 
-void lon_lat_to_x_y(ElevationMetaData tparam,float lon, float lat, int *x, int *y, int *w, int *l)
+void lon_lat_to_x_y(ElevationMetaData tparam, float *lon, float *lat, int *x, int *y, int *w, int *l)
 {
-  *x = (int)((lon - tparam->min_long)/tparam->pixel_size);
-  *y = (int)(tparam->block_size-((lat - tparam->min_lat)/tparam->pixel_size));
+  int xdim, ydim,dim;
+
+  *x = (int)((*lon - tparam->min_long)/tparam->pixel_size);
+  *y = (int)(tparam->block_size-((*lat - tparam->min_lat)/tparam->pixel_size));
+
+  xdim = minimum(*x,((int)(tparam->block_size)-(*x)));
+  ydim = minimum(*y,((int)(tparam->block_size)-(*y)));
+
+  dim = minimum(xdim,ydim); 
+
+//  printf("%d,%d,%d\n",*y,((int)(tparam->block_size)-(*y)),ydim);
+  
+  dim=200;
+
+
+  *x = *x-dim;
+  *y = *y-dim;
+
+//  printf("%d, %d\n",*x,*y);
+
+  *w = dim*2;
+  *l = dim*2;
+
+
 }
 
 void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati)
