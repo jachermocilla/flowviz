@@ -6,7 +6,7 @@
 #include "elevation.h"
 
 
-void get_neighbors(int x, int y, Layer elevation, double neighbors[9])
+void DEight_get_neighbors(int x, int y, Layer elevation, double neighbors[9])
 {
   int i;
   Elevation elev;
@@ -48,7 +48,7 @@ void get_neighbors(int x, int y, Layer elevation, double neighbors[9])
 
 }
 
-int get_min_index(double nbors[9])
+int DEight_get_min_index(double nbors[9])
 {
 	double min=99999999;
 	int min_index=-1;
@@ -69,17 +69,21 @@ Layer DEight_load(Layer elevation)
 {
   double nbors[9];
 	int x,y;
-	FlowMap flow_map;
-	
-	flow_map=(FlowMap)malloc(sizeof(struct _flow_map));
+  Layer layer;
+  DEightFlowDir flow_dir;
 
-	for (y=0;y<(layer->length);y++){
-		for (x=0;x<(layer->width);x++){
-			get_neighbors(x,y,g,nbors);
-			flow_map->direction[y][x]=get_min_index(nbors);
+  
+	
+  layer = Layer_new("deight", NULL, elevation->width, elevation->length);
+
+	for (y=0;y<(elevation->length);y++){
+		for (x=0;x<(elevation->width);x++){
+			DEight_get_neighbors(x,y,elevation,nbors);
+      flow_dir=(DEightFlowDir)malloc(sizeof(struct _deight_flow_dir));
+      flow_dir->value = DEight_get_min_index(nbors);
+      layer->data[y+(x*elevation->width)]=flow_dir;
 		}
 	}
-	g->flow_map=flow_map;
-
+  return layer;
 }
 
