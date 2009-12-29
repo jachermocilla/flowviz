@@ -4,22 +4,30 @@
 #include "layer.h"
 #include "project.h"
 #include "elevation.h"
+#include "deight.h"
 
 int main(int argc, char *argv[])
 {
     Project project;
-    Layer elevation, elevation2;
+    Layer elevation, elevation2, deight;
 
     project = Project_new("Flood Simulation");
+    
     elevation = Elevation_load(argv[1],0,0,1024,1024);
+    deight = DEight_load(elevation);
+    
     Project_add(project, elevation);
+    Project_add(project, deight);
+    
     elevation2 = Project_getLayer(project,"elevation");  
     if (elevation2 != NULL)
     {
-      gElevation = elevation;
+      gElevation = elevation2;
       Elevation_view();
     }
-  
+
+
+
 /*
     printf("%s\n", elevation->name);
     for (i=0;i<elevation->length;i++)
@@ -32,6 +40,7 @@ int main(int argc, char *argv[])
       printf("\n");
     }
 */    
+    return 0;
 }
 
 /*
