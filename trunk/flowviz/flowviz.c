@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     Project project;
-    Layer elevation, elevation2, deight;
+    Layer elevation, deight;
 
     project = Project_new("Flood Simulation");
     
@@ -19,10 +19,10 @@ int main(int argc, char *argv[])
     Project_add(project, elevation);
     Project_add(project, deight);
     
-    elevation2 = Project_getLayer(project,"elevation");  
-    if (elevation2 != NULL)
+    elevation = Project_getLayer(project,"elevation");  
+    if (elevation != NULL)
     {
-      gElevation = elevation2;
+      gElevation = elevation;
       Elevation_view();
     }
 
