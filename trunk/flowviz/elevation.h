@@ -1,6 +1,11 @@
 #ifndef __ELEVATION_H_
 #define __ELEVATION_H_
 
+#include <gdal.h>
+#include <cpl_conv.h>
+#include "layer.h"
+
+
 typedef struct _elevation
 {
   float value;
@@ -16,11 +21,13 @@ typedef struct _elevation_meta_data
   float block_size;
   float min_elev;
   float max_elev;
+  GDALRasterBandH hBand;
 }*ElevationMetaData;
 
 Elevation Elevation_new(float value);
 ElevationMetaData ElevationMetaData_new();
-Layer Elevation_load(char *fname, int x, int y, int width, int height);
+ElevationMetaData Elevation_open(char * fname);
+Layer Elevation_load(ElevationMetaData meta_data, int x, int y, int width, int height);
 void Elevation_view();
 
 #endif

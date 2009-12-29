@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "flowviz.h"
+#include "elevation.h"
 
 void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati);
 
@@ -135,10 +136,10 @@ int minimum(int a, int b)
   }
 }
 
-void longi_lati_to_x_y(DataSetParam tparam,float longi, float lati, int *x, int *y)
+void lon_lat_to_x_y(ElevationMetaData tparam,float lon, float lat, int *x, int *y, int *w, int *l)
 {
-  *x = (int)((longi - tparam->min_long)/tparam->pixel_size);
-  *y = (int)(tparam->block_size-((lati - tparam->min_lat)/tparam->pixel_size));
+  *x = (int)((lon - tparam->min_long)/tparam->pixel_size);
+  *y = (int)(tparam->block_size-((lat - tparam->min_lat)/tparam->pixel_size));
 }
 
 void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati)
