@@ -96,6 +96,32 @@ ElementType   List_insert_sorted(List list, ListIterator pos, ElementType data,
         int (*compar)(const void *, const void *))
 {
 
+	ListNode newnode = ListNode_new(data);
+	
+	assert(list != NULL);
+	assert(data != NULL);
+	
+	if (pos == NULL && list->head == NULL){	/*insert at the head */
+		list->head = newnode;
+		list->tail = newnode;
+	}else if (pos != NULL){
+		if (pos == list->head){		/*with one node*/
+			newnode->next = pos;
+			pos->prev = newnode;
+			list->head = newnode;
+		}else{
+			newnode->next = pos;	/*with two or more nodes*/
+			pos->prev->next = newnode;
+			newnode->prev = pos->prev;
+		}
+	}else if (pos == NULL){			/*add at the end*/
+		list->tail->next = newnode;
+		newnode->prev = list->tail;
+		list->tail = newnode;
+	}
+
+	list->n++;
+
 }
 
 
