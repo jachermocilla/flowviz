@@ -6,6 +6,22 @@
 #include "elevation.h"
 
 
+void DEight_dump_data(Layer deight)
+{
+  int i, j;
+  DEightFlowDir flow_dir;
+  for (i=0;i<deight->length;i++)
+  {
+    for (j=0;j<deight->length;j++)
+    {
+      flow_dir = (DEightFlowDir)deight->data[i+(j*deight->width)];
+      printf(" %1.0f ", flow_dir->value);
+    }
+    printf("\n");
+  }
+}
+
+
 void DEight_get_neighbors(int x, int y, Layer elevation, double neighbors[9])
 {
   int i;
