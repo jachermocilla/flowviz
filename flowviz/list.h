@@ -66,6 +66,9 @@ void 		List_delete(List *list);
 /* Inserts a new element on the list at position pos */
 void 		List_insert(List list, ListIterator pos, ElementType data);
 
+/* Insert item on list based on some criteria*/
+ElementType   List_insert_sorted(List list, ListIterator pos, ElementType data, int (*compar)(const void *, const void *));
+
 /* Removes  an element from the list at position pos*/
 void 		List_remove(List list, ListIterator pos);
 
@@ -104,5 +107,6 @@ void		List_reverse(List list);
 
 /* Retrieves the ith element in the list */
 ElementType		List_elementAtIndex(List list,int i);
+
 
 #endif
