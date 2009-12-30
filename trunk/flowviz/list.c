@@ -91,6 +91,14 @@ void List_delete(List *list){
 	
 }
 
+/* Insert item on list based on some criteria*/
+ElementType   List_insert_sorted(List list, ListIterator pos, ElementType data, 
+        int (*compar)(const void *, const void *))
+{
+
+}
+
+
 /**
  * Inserts a new item or element on a list. What is passed in this function
  * is the data needed. The node is created inside the function.
