@@ -108,7 +108,14 @@ ElementType   List_insert_sorted(List list, ElementType data,
 	}else 
   {
     /* We need to find the proper position*/
-    
+    tmp = list->head;
+    //FIXME
+    while (tmp!= NULL && (compar(newnode,tmp) < 0))
+    {
+      tmp=tmp->next;
+    }    
+
+
 
     /*----------------------------*/
 		list->tail->next = newnode;
