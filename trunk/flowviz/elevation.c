@@ -4,6 +4,22 @@
 #include "layer.h"
 #include "elevation.h"
 
+void Elevation_dump_data(Layer elevation)
+{
+  int i, j;
+  Elevation elev;
+  for (i=0;i<elevation->length;i++)
+  {
+    for (j=0;j<elevation->length;j++)
+    {
+      elev = (Elevation)elevation->data[i+(j*elevation->width)];
+      printf(" %5.0f ", elev->value);
+    }
+    printf("\n");
+  }
+}
+
+
 Elevation Elevation_new(float value)
 {
   Elevation elevation = (Elevation)malloc(sizeof(struct _elevation));
@@ -108,6 +124,12 @@ Layer Elevation_load(ElevationMetaData meta_data, int x, int y, int width, int h
 
     Elevation cel;
     Layer layer;
+
+    meta_data->x=x;
+    meta_data->y=y;
+    meta_data->w=width;
+    meta_data->l=height;
+    
     layer = Layer_new("elevation", meta_data, width, height);
     pafScanline = (float *) CPLMalloc(sizeof(float)*nSize);
     GDALRasterIO( meta_data->hBand, GF_Read, x, y , width, height,

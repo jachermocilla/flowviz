@@ -7,6 +7,7 @@ typedef struct _project
   Layer layers;
 }*Project;
 
+Project globalProject;
 
 Project Project_new(char *name);
 void Project_delete(Project *project);

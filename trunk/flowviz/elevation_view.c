@@ -17,8 +17,10 @@
 #include "flowviz.h"
 #include "layer.h"
 #include "elevation.h"
+#include "project.h"
+#include "rainfall.h"
 
-#define		STEP_SIZE	  4							/* Width And Height Of Each Quad */
+#define		STEP_SIZE	  2							/* Width And Height Of Each Quad */
 #define		HEIGHT_RATIO  0.35f				/* Ratio That The Y Is Scaled According To The X And Z */
 
 
@@ -82,6 +84,7 @@ void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,
 
 int NormalizeElevation(float elevation)
 {
+  Layer gElevation=Project_getLayer(globalProject,"elevation");
   ElevationMetaData metaData=(ElevationMetaData)gElevation->meta_data;;
   return (int)(elevation*(256.0/(metaData->max_elev-metaData->min_elev)));
 }
@@ -120,6 +123,29 @@ void SetVertexColor(Layer elevation, int x, int y)	/* Sets The Color Value For A
     }
 
 	}
+}
+
+void RenderCatchment()
+{
+  int i,j;
+  WaterLevel water_level;
+  Layer catchment = Project_getLayer(globalProject,"catchment");
+  Layer elevation = Project_getLayer(globalProject,"elevation");
+  glBegin(GL_POINTS);
+  for (i=0;i<catchment->length;i++)
+  {
+    for (j=0;j<catchment->width;j++)
+    {
+      water_level=(WaterLevel)catchment->data[i+(j*catchment->width)];
+      if (water_level->level  > 10 )
+      {
+        //printf(" %d ", Height(elevation,j,i));
+        glColor3f(1,1 ,0 );
+        glVertex3i(j, Height(elevation,j,i), i);      
+      }
+    }
+  }
+  glEnd();
 }
 
 void RenderHeightMap(Layer elevation)		/* This Renders The Height Map As Quads */
@@ -194,6 +220,7 @@ void RenderHeightMap(Layer elevation)		/* This Renders The Height Map As Quads *
 
 int drawGLScene(GLVoid)									/* Here's Where We Do All The Drawing */
 {
+  Layer gElevation = Project_getLayer(globalProject,"elevation");
 	glClearColor(0.5,0.5,0.5,0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	/* Clear The Screen And The Depth Buffer */
 	glLoadIdentity();									/* Reset The Matrix */
@@ -220,6 +247,7 @@ int drawGLScene(GLVoid)									/* Here's Where We Do All The Drawing */
 	glTranslatef(-(gElevation->width)/2.0,0,-(gElevation->width)/2.0);
 
 	RenderHeightMap(gElevation);						/* Render The Height Map */
+  RenderCatchment();
 	return True;										/* Keep Going */
 }
 

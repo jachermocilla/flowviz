@@ -40,4 +40,5 @@ typedef struct _deight_meta_data
 void DEight_get_neighbors(int x, int y, Layer layer, double neighbors[9]);
 int DEight_get_min_index(double nbors[9]);
 Layer DEight_load(Layer elevation);
+void DEight_dump_data(Layer deight);
 #endif
