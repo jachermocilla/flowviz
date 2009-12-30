@@ -67,7 +67,7 @@ void 		List_delete(List *list);
 void 		List_insert(List list, ListIterator pos, ElementType data);
 
 /* Insert item on list based on some criteria*/
-ElementType   List_insert_sorted(List list, ListIterator pos, ElementType data, int (*compar)(const void *, const void *));
+ElementType   List_insert_sorted(List list, ElementType data, int (*compar)(const void *, const void *));
 
 /* Removes  an element from the list at position pos*/
 void 		List_remove(List list, ListIterator pos);
