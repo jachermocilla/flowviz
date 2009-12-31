@@ -201,6 +201,10 @@ Layer Rainfall_load(int w, int l,float probability, float amount)
   Rainfall rain;
   int area;
   int i,j;
+  int r;
+
+
+  srand(time(NULL));
 
   area=w*l;
   layer = Layer_new("rainfall", NULL, w, l);
@@ -211,7 +215,15 @@ Layer Rainfall_load(int w, int l,float probability, float amount)
       Point p=(Point)malloc(sizeof(struct _point));
       p->x=j;
       p->y=i;
-      rain = Rainfall_new(1,1,p);
+      r = rand() % 1;
+      if (r == 1)
+      {
+        rain = Rainfall_new(1,1,p);
+      }else
+      {
+        rain = Rainfall_new(1,0,p);
+      }
+
       layer->data[i+(j*w)]=rain;
     }
   }
