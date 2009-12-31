@@ -14,12 +14,13 @@ typedef struct _rainfall
 
 typedef struct _water_level
 {
+  Point p;
   float level;
 }*WaterLevel;
 
 
 Rainfall Rainfall_new(float probability, float amount, Point p);
-WaterLevel WaterLevel_new(float level);
+WaterLevel WaterLevel_new(float level, Point p);
 Layer Rainfall_load(int w, int l,float probability, float amount);
 void Rainfall_flow(Project p, int maxsteps);
 void Rainfall_dump_data(Layer rainfall);
