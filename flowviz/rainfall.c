@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "rainfall.h"
 #include "deight.h"
 #include "list.h"
+
 
 int compare(WaterLevel level1, WaterLevel level2)
 {
@@ -107,7 +109,12 @@ void Rainfall_flow(Project p,int maxsteps)
   Rainfall rain;
   DEightFlowDir flow_dir;
   float tmp;
+  int area;
+  int *shuffle;
+  int mytmp, r;
   
+
+  srand(time(NULL));
 
   elevation=Project_getLayer(p,"elevation");
   deight=Project_getLayer(p,"deight");
@@ -128,13 +135,31 @@ void Rainfall_flow(Project p,int maxsteps)
    *FIXME: This code performs a column-row order traversal
    * Might as well do a random choice of data points.
    *
-  */ 
+  */
+
+  area = (rainfall->length * rainfall->width);
+  shuffle = (int *)malloc(area);
+  
+  for (i=0;i<area;i++)
+  {
+    shuffle[i]=i;
+  }
+  
+  for (i=0;i<area;i++)
+  {
+    r = i + (rand() % (area-i));
+    mytmp = shuffle[i];
+    shuffle[i] = shuffle[r];
+    shuffle[r]=mytmp;  
+  }
+  
+ 
   for (i=2;i<rainfall->length-2;i++)
   {
     for (j=2;j<rainfall->width-2;j++)
     {
       k=i+(j*rainfall->width);
-      rain=(Rainfall)rainfall->data[k];
+      rain=(Rainfall)rainfall->data[shuffle[k]];
       point=rain->p;
       for (t=0;t<maxsteps;t++)
       {
