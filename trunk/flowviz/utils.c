@@ -5,7 +5,7 @@
 #include "flowviz.h"
 #include "elevation.h"
 
-void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati);
+void x_y_to_longi_lati(ElevationMetaData tparam, int x, int y, float *longi, float *lati);
 void lon_lat_to_x_y(ElevationMetaData tparam,float *lon, float *lat, int *x, int *y, int *w, int *l);
 
 Grid generate_random_grid(int width, int length){
@@ -166,7 +166,7 @@ void lon_lat_to_x_y(ElevationMetaData tparam, float *lon, float *lat, int *x, in
 
 }
 
-void x_y_to_longi_lati(DataSetParam tparam, int x, int y, float *longi, float *lati)
+void x_y_to_longi_lati(ElevationMetaData tparam, int x, int y, float *longi, float *lati)
 {
   *longi = (x*tparam->pixel_size)+tparam->min_long;
   *lati = ((tparam->block_size - y)*tparam->pixel_size) + tparam->min_lat;
