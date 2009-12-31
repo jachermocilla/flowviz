@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     List list;
     ListIterator iter;
     WaterLevel water_level;
+    float longi, lati;
 
     int x, y, w, l,k;
     Layer elevation, deight, rainfall, catchment;
@@ -91,7 +92,8 @@ int main(int argc, char *argv[])
     for (iter = List_begin(list); iter != List_last(list); iter = List_next(iter))
     {
       water_level = (WaterLevel)List_elementAt(list,iter);
-		  printf("%d %d %2.0f\n",meta_data->x+water_level->p->x, meta_data->y+water_level->p->y, water_level->level);
+      x_y_to_longi_lati(meta_data, meta_data->x+water_level->p->x, meta_data->y+water_level->p->y,&longi, &lati );
+		  printf("%f, %f, %2.0f\n",lati, longi, water_level->level);
       k++;
       if (k > 10) break;
     }
