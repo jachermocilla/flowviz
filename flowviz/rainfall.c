@@ -124,6 +124,11 @@ void Rainfall_flow(Project p,int maxsteps)
     }
   }
 
+  /**
+   *FIXME: This code performs a column-row order traversal
+   * Might as well do a random choice of data points.
+   *
+  */ 
   for (i=2;i<rainfall->length-2;i++)
   {
     for (j=2;j<rainfall->width-2;j++)
