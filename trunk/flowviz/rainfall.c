@@ -215,7 +215,7 @@ Layer Rainfall_load(int w, int l,float probability, float amount)
       Point p=(Point)malloc(sizeof(struct _point));
       p->x=j;
       p->y=i;
-      r = rand() % 1;
+      r = rand() % 2;
       if (r == 1)
       {
         rain = Rainfall_new(1,1,p);
