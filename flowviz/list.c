@@ -17,6 +17,8 @@
 
 #include "list.h"
 
+#include "rainfall.h"
+
  /**
  * Returns a new ListNode that contains the passed data. 
  *
@@ -98,30 +100,50 @@ ElementType   List_insert_sorted(List list, ElementType data,
 
   ListNode tmp;
 	ListNode newnode = ListNode_new(data);
+  WaterLevel water_level;
 	
 	assert(list != NULL);
 	assert(data != NULL);
+  
+  water_level=(WaterLevel)data;
+  //printf("Inserting %d %d %2.0f\n",water_level->p->x, water_level->p->y, water_level->level);
+  
 	
 	if (list->head == NULL){	/*insert at the head */
 		list->head = newnode;
 		list->tail = newnode;
+    //printf("first node added!\n");
 	}else 
   {
     /* We need to find the proper position*/
     tmp = list->head;
+    water_level = (WaterLevel)tmp->data;
+    //printf("%f\n",water_level->level);
     //FIXME
-    while (tmp!= NULL && (compar(newnode,tmp) < 0))
+    while ((tmp != NULL) && (compar(newnode->data,tmp->data) < 0))
     {
       tmp=tmp->next;
-    }    
-
-
-
-    /*----------------------------*/
-		list->tail->next = newnode;
-		newnode->prev = list->tail;
-		list->tail = newnode;
-	}
+      //printf("here\n");
+    }
+    if (tmp == list->head) /*head*/
+    {
+      list->head->prev=newnode;
+      newnode->next = list->head;
+      list->head=newnode;
+    }else if (tmp == NULL) /*tail*/
+    {
+      newnode->prev=list->tail;
+      list->tail->next = newnode;
+      list->tail = newnode;
+    }else /* middle*/
+    {
+      newnode->prev=tmp->prev;      
+      tmp->prev=newnode;
+      tmp->prev=newnode;
+      newnode->next=tmp;
+      newnode->prev->next=newnode;
+    }
+ 	}
 
 	list->n++;
 

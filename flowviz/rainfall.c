@@ -3,7 +3,45 @@
 
 #include "rainfall.h"
 #include "deight.h"
+#include "list.h"
 
+int compare(WaterLevel level1, WaterLevel level2)
+{
+  //printf("Comparing %f, %f\n",level1->level,level2->level);
+  if (level1->level == level2->level)
+  {
+    return 0;
+  }else if (level1->level > level2->level)
+  {
+    return 1;
+  }else
+  {
+    return -1;
+  }    
+}
+
+
+List Rainfall_get_catchments(Layer catchment)
+{
+  List list;
+  int i, j;
+  WaterLevel water_level;
+
+  list=List_new();
+
+  for (i=1;i<catchment->length-1;i++)
+  {
+    for (j=1;j<catchment->length-1;j++)
+    {
+      water_level = (WaterLevel)catchment->data[i+(j*catchment->width)];
+      if (water_level->level > 1)
+      {
+        List_insert_sorted(list,water_level,compare);
+      }
+    }
+  }
+  return list;
+}
 
 void Catchment_dump_data(Layer catchment)
 {
@@ -81,7 +119,7 @@ void Rainfall_flow(Project p,int maxsteps)
     for (j=0;j<rainfall->width;j++)
     {
       rain = (Rainfall)rainfall->data[i+(j*elevation->width)];
-      water_level = WaterLevel_new(rain->amount);
+      water_level = WaterLevel_new(rain->amount,rain->p);
       catchment->data[i+(j*elevation->width)]=water_level;
     }
   }
@@ -109,10 +147,11 @@ void Rainfall_flow(Project p,int maxsteps)
   Project_add(p,catchment);
 }
 
-WaterLevel WaterLevel_new(float level)
+WaterLevel WaterLevel_new(float level, Point p)
 {
   WaterLevel water_level=(WaterLevel)malloc(sizeof(struct _water_level));
   water_level->level=level;
+  water_level->p=p;
   return water_level;
 }
 

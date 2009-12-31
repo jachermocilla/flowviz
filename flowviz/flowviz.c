@@ -1,15 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "flowviz.h"
 #include "layer.h"
 #include "project.h"
 #include "elevation.h"
 #include "deight.h"
 #include "rainfall.h"
+#include "list.h"
+
+/*
+void test_list()
+{
+  List list;
+  list = List_new();
+  Point p=(Point)malloc(sizeof(struct _point));
+  WaterLevel l1,l2,l3,l4,l;
+  ListIterator iter;
+
+  l1=WaterLevel_new(4,p);
+  l2=WaterLevel_new(3,p);
+  l3=WaterLevel_new(2,p);
+  l4=WaterLevel_new(1,p);
+
+  List_insert_sorted(list,l1,compare);
+  List_insert_sorted(list,l2,compare);
+  List_insert_sorted(list,l3,compare);
+  List_insert_sorted(list,l4,compare);
+
+  for (iter = List_begin(list); iter != List_last(list); iter = List_next(iter))
+  {
+    l = (WaterLevel)List_elementAt(list,iter);
+		printf("%2.0f\n",l->level);
+  }
+}
+*/
 
 int main(int argc, char *argv[])
 {
-    int x, y, w, l;
+    List list;
+    ListIterator iter;
+    WaterLevel water_level;
+
+    int x, y, w, l,k;
     Layer elevation, deight, rainfall, catchment;
     float lon, lat;
     ElevationMetaData meta_data;
@@ -48,12 +81,24 @@ int main(int argc, char *argv[])
     Project_add(globalProject, elevation);
     Project_add(globalProject, deight);
     Project_add(globalProject, rainfall);
-    Rainfall_flow(globalProject,1);    
+    Rainfall_flow(globalProject,10);    
     printf("--------------\n");
     catchment = Project_getLayer(globalProject,"catchment");
     //Catchment_dump_data(catchment);
+    list=Rainfall_get_catchments(catchment);
+    
+    k=0;
+    for (iter = List_begin(list); iter != List_last(list); iter = List_next(iter))
+    {
+      water_level = (WaterLevel)List_elementAt(list,iter);
+		  printf("%d %d %2.0f\n",meta_data->x+water_level->p->x, meta_data->y+water_level->p->y, water_level->level);
+      k++;
+      if (k > 10) break;
+    }
+    
     
     Elevation_view();
     return 0;
+
 }
 
