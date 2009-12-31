@@ -7,3 +7,4 @@
   * [http://www.soi.city.ac.uk/~jwo/landserf/landserf230/doc/howto/srtm.html]
   * [http://en.wikipedia.org/wiki/Probability_of_Precipitation]
   * [http://chromium.sourceforge.net/]
+  * [http://en.wikipedia.org/wiki/Manning_formula]
