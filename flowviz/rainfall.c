@@ -136,15 +136,15 @@ void Rainfall_flow(Project p,int maxsteps)
    * Might as well do a random choice of data points.
    *
   */
-
   area = (rainfall->length * rainfall->width);
-  shuffle = (int *)malloc(area);
+  shuffle = (int *)malloc(area*sizeof(int));
   
   for (i=0;i<area;i++)
   {
     shuffle[i]=i;
   }
   
+
   for (i=0;i<area;i++)
   {
     r = i + (rand() % (area-i));
@@ -152,7 +152,6 @@ void Rainfall_flow(Project p,int maxsteps)
     shuffle[i] = shuffle[r];
     shuffle[r]=mytmp;  
   }
-  
  
   for (i=2;i<rainfall->length-2;i++)
   {
