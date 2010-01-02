@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     ElevationMetaData meta_data;
 
     if (argc < 2){
-		  printf("Usage: flowviz <DEM> <longitude> <latitude>\n");
+		  printf("Usage: flowviz <DEM> <latitude> <longitude> \n");
 		  exit(1);
 	  }
 
@@ -57,8 +57,8 @@ int main(int argc, char *argv[])
     lon = 123.686f;
 
     if (argv[2] != NULL && argv[3] != NULL){
-      lon = atof(argv[2]);
-      lat = atof(argv[3]);
+      lat = atof(argv[2]);
+      lon = atof(argv[3]);
     }
 
     globalProject = Project_new("Flood Simulation");
@@ -82,7 +82,9 @@ int main(int argc, char *argv[])
     Project_add(globalProject, elevation);
     Project_add(globalProject, deight);
     Project_add(globalProject, rainfall);
+
     Rainfall_flow(globalProject,10);    
+
     printf("--------------\n");
     catchment = Project_getLayer(globalProject,"catchment");
     //Catchment_dump_data(catchment);
