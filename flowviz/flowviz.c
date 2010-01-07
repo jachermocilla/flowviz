@@ -72,11 +72,11 @@ int main(int argc, char *argv[])
     printf("--------------\n");
 
     deight = DEight_load(elevation);
-    //DEight_dump_data(deight);
+   // DEight_dump_data(deight);
 
     printf("--------------\n");
     rainfall=Rainfall_load(w,l,1,1);
-    //Rainfall_dump_data(rainfall);
+   // Rainfall_dump_data(rainfall);
 
     
     Project_add(globalProject, elevation);
