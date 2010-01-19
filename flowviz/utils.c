@@ -190,7 +190,7 @@ void export_google_map(Layer catchment, ElevationMetaData meta_data)
     water_level = (WaterLevel)List_elementAt(list,iter);
     x_y_to_longi_lati(meta_data, meta_data->x+water_level->p->x, meta_data->y+water_level->p->y,&longi, &lati );
     //printf(" %2.0f ", water_level->level);
-    printf("%f, %f\n",lati, longi);
+    printf("<a href=\"http://maps.google.com/maps?q=%f,%f\">%f, %f</a>\n",lati, longi, lati, longi);
     k++;
     if (k > 10) break;
   }
