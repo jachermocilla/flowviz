@@ -144,9 +144,7 @@ ElementType   List_insert_sorted(List list, ElementType data,
       newnode->prev->next=newnode;
     }
  	}
-
 	list->n++;
-
 }
 
 

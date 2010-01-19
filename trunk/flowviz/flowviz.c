@@ -38,12 +38,7 @@ void test_list()
 
 int main(int argc, char *argv[])
 {
-    List list;
-    ListIterator iter;
-    WaterLevel water_level;
-    float longi, lati;
-
-    int x, y, w, l,k;
+    int x, y, w, l;
     Layer elevation, deight, rainfall, catchment;
     float lon, lat;
     ElevationMetaData meta_data;
@@ -88,8 +83,10 @@ int main(int argc, char *argv[])
     printf("--------------\n");
     catchment = Project_getLayer(globalProject,"catchment");
     //Catchment_dump_data(catchment);
+
+    export_google_map(catchment, meta_data);
+/*
     list=Rainfall_get_catchments(catchment);
-    
     k=0;
     for (iter = List_begin(list); iter != List_last(list); iter = List_next(iter))
     {
@@ -99,7 +96,7 @@ int main(int argc, char *argv[])
       k++;
       if (k > 10) break;
     }
-    
+*/    
     
     Elevation_view();
     return 0;
