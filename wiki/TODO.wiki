@@ -1,0 +1,8 @@
+  # Implement Catchment Derivation and Visualization Module
+  # Randomize Iteration
+  # Allow loading of appropriate tile based on lon and lat (assumes all tiles have been extracted in a data directory)
+  # Perform K-Means clustering on sample runs
+  # Fix the timing (assume 1 iteration as 1 second)
+  # Specify as command line the dimension
+
+
