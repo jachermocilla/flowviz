@@ -4,6 +4,8 @@
 
 #include "flowviz.h"
 #include "elevation.h"
+#include "list.h"
+#include "rainfall.h"
 
 void x_y_to_longi_lati(ElevationMetaData tparam, int x, int y, float *longi, float *lati);
 void lon_lat_to_x_y(ElevationMetaData tparam,float *lon, float *lat, int *x, int *y, int *w, int *l);
@@ -152,7 +154,7 @@ void lon_lat_to_x_y(ElevationMetaData tparam, float *lon, float *lat, int *x, in
 
 //  printf("%d,%d,%d\n",*y,((int)(tparam->block_size)-(*y)),ydim);
   
-//  dim=256; 
+  dim=20; 
 
 
   *x = *x-dim;
@@ -170,4 +172,26 @@ void x_y_to_longi_lati(ElevationMetaData tparam, int x, int y, float *longi, flo
 {
   *longi = (x*tparam->pixel_size)+tparam->min_long;
   *lati = ((tparam->block_size - y)*tparam->pixel_size) + tparam->min_lat;
+}
+
+void export_google_map(Layer catchment, ElevationMetaData meta_data)
+{
+  List list;
+  ListIterator iter;
+  int k;
+  WaterLevel water_level;
+  float longi, lati;
+  
+  list=Rainfall_get_catchments(catchment);
+    
+  k=0;
+  for (iter = List_begin(list); iter != List_last(list); iter = List_next(iter))
+  {
+    water_level = (WaterLevel)List_elementAt(list,iter);
+    x_y_to_longi_lati(meta_data, meta_data->x+water_level->p->x, meta_data->y+water_level->p->y,&longi, &lati );
+    //printf(" %2.0f ", water_level->level);
+    printf("%f, %f\n",lati, longi);
+    k++;
+    if (k > 10) break;
+  }
 }
