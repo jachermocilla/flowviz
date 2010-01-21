@@ -4,5 +4,7 @@
   # Perform K-Means clustering on sample runs
   # Fix the timing (assume 1 iteration as 1 second)
   # Specify as command line the dimension
-
-
+  # Add the following layers:
+    # Precipitation Layer
+    # Infiltration Layer
+    # Roughness Layer (Manning Value)
