@@ -8,8 +8,7 @@ void Elevation_dump_data(Layer elevation)
 {
   int i, j;
   Elevation elev;
-  printf("Elevation");
-  printf("-----------------------------------------------\n");
+  printf("---Elevation--------------------------------------\n");
   for (i=0;i<elevation->length;i++)
   {
     for (j=0;j<elevation->length;j++)

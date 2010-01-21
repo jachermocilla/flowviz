@@ -8,6 +8,7 @@
 #include "deight.h"
 #include "rainfall.h"
 #include "list.h"
+#include "slope.h"
 
 /*
 void test_list()
@@ -65,6 +66,7 @@ int main(int argc, char *argv[])
     elevation = Elevation_load(meta_data,x,y,w,l);
     Elevation_dump_data(elevation);
 
+    
     slope = zevenvergen_slope(elevation);
     Slope_dump_data(slope);
 
@@ -75,6 +77,7 @@ int main(int argc, char *argv[])
     Rainfall_dump_data(rainfall);
     
     Project_add(globalProject, elevation);
+    Project_add(globalProject, slope);
     Project_add(globalProject, deight);
     Project_add(globalProject, rainfall);
 
