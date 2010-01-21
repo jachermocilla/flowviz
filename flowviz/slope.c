@@ -1,15 +1,18 @@
 
+#include "elevation.h"
+#include "slope.h"
+
 
 Slope Slope_new(float slope, float aspect, float angle)
 {
-  Slope slope;
+  Slope retval;
 
-  slope = (Slope)malloc(sizeof(struct _slope));
-  slope->slope = slope;
-  slope->aspect = aspect;
-  slope->angle = angle; 
+  retval = (Slope)malloc(sizeof(struct _slope));
+  retval->slope = slope;
+  retval->aspect = aspect;
+  retval->angle = angle; 
 
-  return slope;
+  return retval;
 }
 
 
