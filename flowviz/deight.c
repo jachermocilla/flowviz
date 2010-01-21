@@ -14,7 +14,7 @@ void DEight_dump_data(Layer deight)
   printf("-----------------------------------------------\n");
   for (i=0;i<deight->length;i++)
   {
-    for (j=0;j<deight->length;j++)
+    for (j=0;j<deight->width;j++)
     {
       flow_dir = (DEightFlowDir)deight->data[i+(j*deight->width)];
       printf(" %1.0f ", flow_dir->value);

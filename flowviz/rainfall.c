@@ -53,7 +53,7 @@ void Catchment_dump_data(Layer catchment)
   printf("-----------------------------------------------\n");
   for (i=0;i<catchment->length;i++)
   {
-    for (j=0;j<catchment->length;j++)
+    for (j=0;j<catchment->width;j++)
     {
       water_level = (WaterLevel)catchment->data[i+(j*catchment->width)];
       printf(" %3.0f ", water_level->level);
@@ -73,7 +73,7 @@ void Rainfall_dump_data(Layer rainfall)
   printf("-----------------------------------------------\n");
   for (i=0;i<rainfall->length;i++)
   {
-    for (j=0;j<rainfall->length;j++)
+    for (j=0;j<rainfall->width;j++)
     {
       rain = (Rainfall)rainfall->data[i+(j*rainfall->width)];
       printf(" %1.0f ", rain->amount);

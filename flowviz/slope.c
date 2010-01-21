@@ -6,10 +6,9 @@ void Slope_dump_data(Layer slope)
 {
   int i, j;
   Slope slp;
-  printf("Here ");
   for (i=0;i<slope->length;i++)
   {
-    for (j=0;j<slope->length;j++)
+    for (j=0;j<slope->width;j++)
     {
       slp = (Slope)slope->data[i+(j*slope->width)];
       printf(" (%2.2f,%2.2f,%2.2f) ",slp->slope, slp->angle, slp->aspect);
