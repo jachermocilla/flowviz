@@ -49,6 +49,8 @@ void Catchment_dump_data(Layer catchment)
 {
   int i, j;
   WaterLevel water_level;
+  printf("Catchment");
+  printf("-----------------------------------------------\n");
   for (i=0;i<catchment->length;i++)
   {
     for (j=0;j<catchment->length;j++)
@@ -58,6 +60,7 @@ void Catchment_dump_data(Layer catchment)
     }
     printf("\n");
   }
+  printf("-----------------------------------------------\n");
 }
 
 
@@ -66,6 +69,8 @@ void Rainfall_dump_data(Layer rainfall)
 {
   int i, j;
   Rainfall rain;
+  printf("Rainfall");
+  printf("-----------------------------------------------\n");
   for (i=0;i<rainfall->length;i++)
   {
     for (j=0;j<rainfall->length;j++)
@@ -75,6 +80,7 @@ void Rainfall_dump_data(Layer rainfall)
     }
     printf("\n");
   }
+  printf("-----------------------------------------------\n");
 }
 
 
