@@ -43,7 +43,8 @@ Layer zevenvergen_slope(Layer elevation)
       east_west = (-1*(east->value)+(west->value))/(2*90);
       north_south = ((north->value)-(south->value))/(2*90);
       slope->slope = -sqrt((east_west*east_west)+(north_south*north_south));
-
+      slope->angle = 1.0/tan(slope->slope);
+      slope->aspect = arctan(north_south/east_west);
     }
   }
   
