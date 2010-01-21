@@ -2,6 +2,23 @@
 #include "elevation.h"
 #include "slope.h"
 
+void Slope_dump_data(Layer slope)
+{
+  int i, j;
+  Slope slp;
+  for (i=0;i<slope->length;i++)
+  {
+    for (j=0;j<slope->length;j++)
+    {
+      slp = (Slope)slope->data[i+(j*slope->width)];
+      printf(" (%2.2f,%2.2f,%2.2f) ",slp->slope, slp->angle, slp->aspect);
+    }
+    printf("\n");
+  }
+
+}
+
+
 
 Slope Slope_new(float slope, float aspect, float angle)
 {
@@ -14,9 +31,6 @@ Slope Slope_new(float slope, float aspect, float angle)
 
   return retval;
 }
-
-
-
 
 Layer zevenvergen_slope(Layer elevation)
 {
@@ -44,7 +58,7 @@ Layer zevenvergen_slope(Layer elevation)
       north_south = ((north->value)-(south->value))/(2*90);
       slope->slope = -sqrt((east_west*east_west)+(north_south*north_south));
       slope->angle = 1.0/tan(slope->slope);
-      slope->aspect = arctan(north_south/east_west);
+      slope->aspect = atan(north_south/east_west);
     }
   }
   

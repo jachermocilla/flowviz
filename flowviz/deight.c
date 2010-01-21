@@ -10,6 +10,8 @@ void DEight_dump_data(Layer deight)
 {
   int i, j;
   DEightFlowDir flow_dir;
+  printf("D8");
+  printf("-----------------------------------------------\n");
   for (i=0;i<deight->length;i++)
   {
     for (j=0;j<deight->length;j++)
@@ -19,6 +21,7 @@ void DEight_dump_data(Layer deight)
     }
     printf("\n");
   }
+  printf("-----------------------------------------------\n");
 }
 
 
