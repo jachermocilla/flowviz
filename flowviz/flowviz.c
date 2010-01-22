@@ -64,17 +64,17 @@ int main(int argc, char *argv[])
     lon_lat_to_x_y(meta_data, &lon, &lat, &x, &y, &w, &l);
     
     elevation = Elevation_load(meta_data,x,y,w,l);
-    Elevation_dump_data(elevation);
+    //Elevation_dump_data(elevation);
 
     
     slope = zevenvergen_slope(elevation);
-    Slope_dump_data(slope);
+    //Slope_dump_data(slope);
 
     deight = DEight_load(elevation);
-    DEight_dump_data(deight);
+    //DEight_dump_data(deight);
 
     rainfall=Rainfall_load(w,l,1,1);
-    Rainfall_dump_data(rainfall);
+    //Rainfall_dump_data(rainfall);
     
     Project_add(globalProject, elevation);
     Project_add(globalProject, slope);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     Rainfall_flow(globalProject,10);    
 
     catchment = Project_getLayer(globalProject,"catchment");
-    Catchment_dump_data(catchment);
+    //Catchment_dump_data(catchment);
 
     export_google_map(catchment, meta_data);
 /*
