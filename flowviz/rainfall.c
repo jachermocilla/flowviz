@@ -49,8 +49,7 @@ void Catchment_dump_data(Layer catchment)
 {
   int i, j;
   WaterLevel water_level;
-  printf("Catchment");
-  printf("-----------------------------------------------\n");
+  printf("Catchment---------------------------------------\n");
   for (i=0;i<catchment->length;i++)
   {
     for (j=0;j<catchment->width;j++)
@@ -69,8 +68,7 @@ void Rainfall_dump_data(Layer rainfall)
 {
   int i, j;
   Rainfall rain;
-  printf("Rainfall");
-  printf("-----------------------------------------------\n");
+  printf("Rainfall---------------------------------------\n");
   for (i=0;i<rainfall->length;i++)
   {
     for (j=0;j<rainfall->width;j++)
@@ -200,14 +198,13 @@ Rainfall Rainfall_new(float probability, float amount, Point p)
   return rain;
 }
 
-Layer Rainfall_load(int w, int l,float probability, float amount)
+Layer Rainfall_load(int w, int l,int probability, float amount)
 {
   Layer layer;
   Rainfall rain;
   int area;
   int i,j;
   int r;
-
 
   srand(time(NULL));
 
@@ -220,15 +217,14 @@ Layer Rainfall_load(int w, int l,float probability, float amount)
       Point p=(Point)malloc(sizeof(struct _point));
       p->x=j;
       p->y=i;
-      r = rand() % 2;
-      if (r == 1)
+      r = rand() % 100;
+      if (r >= (100-probability))
       {
         rain = Rainfall_new(1,1,p);
       }else
       {
         rain = Rainfall_new(1,0,p);
       }
-
       layer->data[i+(j*w)]=rain;
     }
   }
