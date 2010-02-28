@@ -1,0 +1,23 @@
+FlowViz
+
+This tool is for simulating and visualizing flow from
+Digital Elevation Models
+
+Requirements
+------------
+1. GLUT/xf86vmode
+2. GDAL
+
+To build
+--------
+$make
+$flowviz data/makiling.txt
+
+
+Sample Coordinates
+------------------
+Mt. Makiling (14.13054, 121.19048)
+Mt. Mayon (13.2552, 123.686)
+Taal (14.002, 120.993)
+Mt. Banahaw (14.06394, 121.42523)
+Mt. Isarog (13.6667 123.383)
