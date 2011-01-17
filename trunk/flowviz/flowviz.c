@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     }
 */    
     
-    //Elevation_view();
+    Elevation_view();
     return 0;
 
 }
