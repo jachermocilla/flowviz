@@ -154,7 +154,7 @@ void lon_lat_to_x_y(ElevationMetaData tparam, float *lon, float *lat, int *x, in
 
 //  printf("%d,%d,%d\n",*y,((int)(tparam->block_size)-(*y)),ydim);
   
-  dim=5; 
+  dim=100; 
 
 
   *x = *x-dim;
