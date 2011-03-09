@@ -10,8 +10,18 @@ Requirements
 
 To build
 --------
-$make
-$flowviz data/makiling.txt
+$ make
+
+To run
+------
+$ ./flowviz <DEM> <latitude> <longitude> 
+
+for <DEM>: you need to download the Philippines-SRTM4.1.zip file
+-extract the necessary files
+
+sample run
+-------
+./flowviz data/srtm_61_09.asc 14.13054 121.19048
 
 
 Sample Coordinates
