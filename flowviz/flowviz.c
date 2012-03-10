@@ -40,7 +40,7 @@ void test_list()
 int main(int argc, char *argv[])
 {
     int x, y, w, l;
-    Layer elevation, deight, rainfall, catchment, slope;
+    Layer elevation, deight, rainfall, catchment, slope, traceflow;
     float lon, lat;
     ElevationMetaData meta_data;
 
@@ -82,8 +82,9 @@ int main(int argc, char *argv[])
     Project_add(globalProject, rainfall);
 
     Rainfall_flow(globalProject,10);    
-
     catchment = Project_getLayer(globalProject,"catchment");
+    Catchment_dump_data(catchment);
+    catchment = Project_getLayer(globalProject,"traceflow");
     Catchment_dump_data(catchment);
 
     export_google_map(catchment, meta_data);

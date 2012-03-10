@@ -103,10 +103,9 @@ void get_next(int dir, Point p)
     p->y=0;
 }
 
-
 void Rainfall_flow(Project p,int maxsteps)
 {
-  Layer catchment, elevation, deight, rainfall;
+  Layer catchment, elevation, deight, rainfall, traceflow;
   int i,j,k,t=0;  
   WaterLevel water_level;
   Point point;
@@ -117,21 +116,24 @@ void Rainfall_flow(Project p,int maxsteps)
   int *shuffle;
   int mytmp, r;
   
-
   srand(time(NULL));
 
   elevation=Project_getLayer(p,"elevation");
   deight=Project_getLayer(p,"deight");
   rainfall=Project_getLayer(p,"rainfall");
 
-  catchment = Layer_new("catchment",NULL,elevation->width, elevation->length);    
+  catchment = Layer_new("catchment",NULL,elevation->width, elevation->length);
+  traceflow = Layer_new("traceflow",NULL,elevation->width, elevation->length);
+
+
   for (i=0;i<rainfall->length;i++)
   {
     for (j=0;j<rainfall->width;j++)
     {
       rain = (Rainfall)rainfall->data[i+(j*elevation->width)];
       water_level = WaterLevel_new(rain->amount,rain->p);
-      catchment->data[i+(j*elevation->width)]=water_level;
+      catchment->data[i+(j*elevation->width)]=water_level;		
+      traceflow->data[j+(i*elevation->width)]=water_level;
     }
   }
 
@@ -140,6 +142,7 @@ void Rainfall_flow(Project p,int maxsteps)
    * Might as well do a random choice of data points.
    *
   */
+
   area = (rainfall->length * rainfall->width);
   shuffle = (int *)malloc(area*sizeof(int));
   
@@ -147,7 +150,6 @@ void Rainfall_flow(Project p,int maxsteps)
   {
     shuffle[i]=i;
   }
-  
 
   for (i=0;i<area;i++)
   {
@@ -156,27 +158,32 @@ void Rainfall_flow(Project p,int maxsteps)
     shuffle[i] = shuffle[r];
     shuffle[r]=mytmp;  
   }
- 
-  for (i=2;i<rainfall->length-2;i++)
-  {
-    for (j=2;j<rainfall->width-2;j++)
-    {
-      k=i+(j*rainfall->width);
-      rain=(Rainfall)rainfall->data[shuffle[k]];
-      point=rain->p;
-      for (t=0;t<maxsteps;t++)
-      {
-        water_level = (WaterLevel)catchment->data[k];
-        tmp = water_level->level;
-        water_level->level=0;
-        flow_dir = (DEightFlowDir)deight->data[point->y+(point->x*deight->width)];
-        get_next(flow_dir->value,point);
-        water_level = (WaterLevel)catchment->data[point->y+(point->x*deight->width)];
-        water_level->level+=tmp;
+
+  for (i=2;i<rainfall->length-2;i++){
+    for (j=2;j<rainfall->width-2;j++){			
+	      k=i+(j*rainfall->width);
+	      rain=(Rainfall)rainfall->data[k];
+		   point=rain->p;
+		 for (t=0;t<maxsteps;t++){
+		     water_level = (WaterLevel)catchment->data[k];
+		     tmp = water_level->level;
+		     water_level->level=0;
+	//		  printf(" water source: %d,%d", point->x, point->y);
+		     flow_dir = (DEightFlowDir)deight->data[point->y+(point->x*deight->width)];
+		     get_next(flow_dir->value,point);
+	//		  printf(" nxt point: %d,%d ", point->x, point->y);
+		     water_level = (WaterLevel)catchment->data[point->y+(point->x*deight->width)];
+		     water_level->level+=tmp; //update catchment of next point
+	 		  if(tmp>0){
+				traceflow->data[k] = water_level;
+				traceflow->data[point->y+(point->x*deight->width)] = water_level;
+			  }
+		 }
         //printf("(%d, %d, %f, %f)\n", point->x,point->y,flow_dir->value,water_level->level);
-      }
+		 printf("\n");
     }
   }
+  Project_add(p,traceflow);
   Project_add(p,catchment);
 }
 

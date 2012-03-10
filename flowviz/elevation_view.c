@@ -129,7 +129,7 @@ void RenderCatchment()
 {
   int i,j;
   WaterLevel water_level;
-  Layer catchment = Project_getLayer(globalProject,"catchment");
+  Layer catchment = Project_getLayer(globalProject,"traceflow");
   Layer elevation = Project_getLayer(globalProject,"elevation");
   glBegin(GL_POINTS);
   for (i=0;i<catchment->length;i++)
@@ -137,13 +137,14 @@ void RenderCatchment()
     for (j=0;j<catchment->width;j++)
     {
       water_level=(WaterLevel)catchment->data[i+(j*catchment->width)];
-      if (water_level->level  > 10 )
+      if (water_level->level  > 0 )
       {
-        //printf(" %d ", Height(elevation,j,i));
+        printf(" (%d,%d) ", j,i);
         glColor3f(1,1 ,0 );
         glVertex3i(j, Height(elevation,j,i), i);      
       }
     }
+	printf("\n");
   }
   glEnd();
 }
@@ -159,6 +160,7 @@ void RenderHeightMap(Layer elevation)		/* This Renders The Height Map As Quads *
 
 	if(bRender)											/* What We Want To Render */
 		glBegin( GL_QUADS );							/* Render Polygons */
+
 	else
 		glBegin( GL_LINES );							/* Render Lines Instead */
 
