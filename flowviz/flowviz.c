@@ -43,6 +43,9 @@ int main(int argc, char *argv[])
     Layer elevation, deight, rainfall, catchment, slope, traceflow;
     float lon, lat;
     ElevationMetaData meta_data;
+	 clock_t start, end;
+	 double elapsed;
+	 start = clock();
 
     if (argc < 2){
 		  printf("Usage: flowviz <DEM> <latitude> <longitude> \n");
@@ -62,30 +65,33 @@ int main(int argc, char *argv[])
 
     meta_data = Elevation_open(argv[1]);
     lon_lat_to_x_y(meta_data, &lon, &lat, &x, &y, &w, &l);
-    
+    printf("loading elevation layers.");
     elevation = Elevation_load(meta_data,x,y,w,l);
-    Elevation_dump_data(elevation);
+//    Elevation_dump_data(elevation);
 
-    
+    printf("Computing for elevation slope.");
     slope = zevenvergen_slope(elevation);
-    Slope_dump_data(slope);
+//    Slope_dump_data(slope);
 
+    printf("Computing for Deight flow directions.");
     deight = DEight_load(elevation);
-    DEight_dump_data(deight);
+//    DEight_dump_data(deight);
 
+    printf("Adding rainfall.");
     rainfall=Rainfall_load(w,l,1,1);
-    Rainfall_dump_data(rainfall);
+//    Rainfall_dump_data(rainfall);
     
     Project_add(globalProject, elevation);
     Project_add(globalProject, slope);
     Project_add(globalProject, deight);
     Project_add(globalProject, rainfall);
 
-    Rainfall_flow(globalProject,10);    
+    printf("Computing for catchment areas.");
+    Rainfall_flow(globalProject,10);
     catchment = Project_getLayer(globalProject,"catchment");
-    Catchment_dump_data(catchment);
-    catchment = Project_getLayer(globalProject,"traceflow");
-    Catchment_dump_data(catchment);
+//    Catchment_dump_data(catchment);
+//    catchment = Project_getLayer(globalProject,"traceflow");
+//    Catchment_dump_data(catchment);
 
     export_google_map(catchment, meta_data);
 /*
@@ -101,6 +107,8 @@ int main(int argc, char *argv[])
     }
 */    
     
+	 elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+	 printf("\n time elapsed: %f \n", elapsed);
     Elevation_view();
     return 0;
 
