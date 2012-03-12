@@ -168,10 +168,10 @@ void Rainfall_flow(Project p,int maxsteps)
 		     water_level = (WaterLevel)catchment->data[k];
 		     tmp = water_level->level;
 		     water_level->level=0;
-	//		  printf(" water source: %d,%d", point->x, point->y);
+	//		  printf(" water source: (%d,%d)", point->x, point->y);
 		     flow_dir = (DEightFlowDir)deight->data[point->y+(point->x*deight->width)];
 		     get_next(flow_dir->value,point);
-	//		  printf(" nxt point: %d,%d ", point->x, point->y);
+	//		  printf(" nxt point: (%d,%d) ", point->x, point->y);
 		     water_level = (WaterLevel)catchment->data[point->y+(point->x*deight->width)];
 		     water_level->level+=tmp; //update catchment of next point
 	 		  if(tmp>0){

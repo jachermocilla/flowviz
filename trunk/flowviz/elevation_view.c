@@ -17,12 +17,13 @@
 #include "flowviz.h"
 #include "layer.h"
 #include "elevation.h"
+#include "deight.h"
 #include "project.h"
 #include "rainfall.h"
 
 #define		STEP_SIZE	  2							/* Width And Height Of Each Quad */
 #define		HEIGHT_RATIO  0.35f				/* Ratio That The Y Is Scaled According To The X And Z */
-
+#define		MAXSTEPS	  10		
 
 BOOL		bRender = True;							/* Polygon Flag Set To TRUE By Default */
 
@@ -90,6 +91,28 @@ int NormalizeElevation(float elevation)
 }
 
 
+void GetPointFromDir(int dir, Point p)
+{
+printf("dir: %d ",dir);
+	switch (dir){
+		case I_NW: p->x-=1;p->y-=1;break;
+		case I_N: p->y-=1; break;
+		case I_NE: p->x+=1; p->y-=1;break;
+		case I_W: p->x-=1; break;
+		case I_CENTER: break;
+		case I_E: p->x+=1; break;
+		case I_SW: p->x-=1;p->y+=1; break;
+		case I_S: p->y+=1; break;
+		case I_SE: p->x+=1;p->y+=1; break;
+	}
+
+  if(p->x < 0)
+    p->x=0;
+  if(p->y < 0)
+    p->y=0;
+
+}
+
 int Height(Layer elevation, int X, int Y)	
 {
   Elevation elev;
@@ -125,11 +148,40 @@ void SetVertexColor(Layer elevation, int x, int y)	/* Sets The Color Value For A
 	}
 }
 
+void RenderFlowMap(){
+  int i,j,t;
+  Point pt;
+  Rainfall water_level;
+  Layer deight = Project_getLayer(globalProject,"deight");
+  Layer rainfall = Project_getLayer(globalProject,"rainfall");
+  Layer elevation = Project_getLayer(globalProject,"elevation");
+  DEightFlowDir flow_dir;
+  glBegin(GL_LINES);
+  for (i=0;i<elevation->length;i++)
+  {
+    for (j=0;j<elevation->width;j++)
+    {
+      water_level=(Rainfall)rainfall->data[i+(j*elevation->width)];
+      if(water_level->amount  > 9 ){
+		 pt=water_level->p;
+	    for (t=0;t<MAXSTEPS;t++){
+        glColor3f(1.0f,1.0f,0.0f);
+	     glVertex3i(pt->x,Height(elevation,pt->x,pt->y),pt->y);
+        flow_dir = (DEightFlowDir)deight->data[pt->y+(pt->x*deight->width)];
+        GetPointFromDir(flow_dir->value,pt);
+   	 }
+		}
+	}
+	printf("\n");
+  }
+  glEnd();
+}
+
 void RenderCatchment()
 {
   int i,j;
   WaterLevel water_level;
-  Layer catchment = Project_getLayer(globalProject,"traceflow");
+  Layer catchment = Project_getLayer(globalProject,"catchment");
   Layer elevation = Project_getLayer(globalProject,"elevation");
   glBegin(GL_POINTS);
   for (i=0;i<catchment->length;i++)
@@ -137,14 +189,14 @@ void RenderCatchment()
     for (j=0;j<catchment->width;j++)
     {
       water_level=(WaterLevel)catchment->data[i+(j*catchment->width)];
-      if (water_level->level  > 0 )
+      if (water_level->level  > 10 )
       {
-        printf(" (%d,%d) ", j,i);
+     //   printf(" (%d,%d) ", j,i);
         glColor3f(1,1 ,0 );
         glVertex3i(j, Height(elevation,j,i), i);      
       }
     }
-	printf("\n");
+	//printf("\n");
   }
   glEnd();
 }
@@ -249,7 +301,7 @@ int drawGLScene(GLVoid)									/* Here's Where We Do All The Drawing */
 	glTranslatef(-(gElevation->width)/2.0,0,-(gElevation->width)/2.0);
 
 	RenderHeightMap(gElevation);						/* Render The Height Map */
-  RenderCatchment();
+	RenderCatchment();
 	return True;										/* Keep Going */
 }
 
